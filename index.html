@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aladdin & Intertextuality</title>
+    
+    <!-- 1. Tailwind CSS (No installation required) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. Cinematic Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- 3. Custom CSS for Animations and Specific Styles -->
+    <style>
+        /* Define the Theme Variables */
+        :root {
+            --gold: #d4af37;
+            --rich-gold: #f59e0b;
+            --deep-purple: #4c1d95;
+            --arabian-blue: #1e3a8a;
+            --desert-orange: #ea580c;
+            --magic-teal: #14b8a6;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #000;
+            overflow: hidden; /* Prevent scrolling */
+            color: white;
+        }
+
+        h1, h2, h3, .cinematic-text {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Animated Background - Arabian Nights Sky */
+        .bg-layer {
+            background: radial-gradient(circle at 30% 20%, #1e1b4b 0%, #312e81 25%, #4c1d95 50%, #1e3a8a 75%, #0f172a 100%);
+            animation: pulse-bg 15s infinite alternate;
+        }
+        
+        .bg-layer::before {
+            content: '✨';
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            font-size: 20px;
+            animation: twinkle 3s infinite alternate;
+        }
+        
+        .bg-layer::after {
+            content: '🌙';
+            position: absolute;
+            top: 15%;
+            right: 20%;
+            font-size: 50px;
+            opacity: 0.8;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse-bg {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Magic Dust Particles - Gold & Mystical */
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: float-up linear infinite;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5) rotate(360deg); opacity: 0; }
+        }
+
+        /* The Magic Frame - Lamp Inspired */
+        .magic-frame {
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.95) 0%, rgba(76, 29, 149, 0.9) 100%);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 5px solid;
+            border-image: linear-gradient(45deg, #d4af37, #f59e0b, #ea580c, #d4af37) 1;
+            box-shadow: 
+                0 0 60px rgba(212, 175, 55, 0.5), 
+                0 0 120px rgba(234, 88, 12, 0.3),
+                inset 0 0 30px rgba(0,0,0,0.6),
+                inset 0 0 60px rgba(76, 29, 149, 0.4);
+            position: relative;
+        }
+        
+        .magic-frame::before {
+            content: '🪔';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
+            animation: genie-lamp 3s ease-in-out infinite;
+        }
+        
+        @keyframes genie-lamp {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Corner Decorations - Arabian Ornaments */
+        .corner {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 5px solid;
+            border-image: linear-gradient(45deg, #fcd34d, #d4af37) 1;
+            transition: all 0.3s ease;
+        }
+        .corner-tl { 
+            top: -5px; 
+            left: -5px; 
+            border-right: none; 
+            border-bottom: none;
+        }
+        .corner-tl::before {
+            content: '✦';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            color: #d4af37;
+            font-size: 20px;
+        }
+        .corner-tr { 
+            top: -5px; 
+            right: -5px; 
+            border-left: none; 
+            border-bottom: none;
+        }
+        .corner-tr::before {
+            content: '✦';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            color: #d4af37;
+            font-size: 20px;
+        }
+        .corner-bl { 
+            bottom: -5px; 
+            left: -5px; 
+            border-right: none; 
+            border-top: none;
+        }
+        .corner-bl::before {
+            content: '✦';
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            color: #d4af37;
+            font-size: 20px;
+        }
+        .corner-br { 
+            bottom: -5px; 
+            right: -5px; 
+            border-left: none; 
+            border-top: none;
+        }
+        .corner-br::before {
+            content: '✦';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            color: #d4af37;
+            font-size: 20px;
+        }
+
+        /* Slide Transition Animation */
+        .slide-enter {
+            animation: carpet-fly-in 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes carpet-fly-in {
+            0% {
+                opacity: 0;
+                transform: translateX(100%) skewX(-10deg) scale(0.8);
+                filter: blur(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) skewX(0deg) scale(1);
+                filter: blur(0px);
+            }
+        }
+
+        @keyframes fade-slide-up {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Coin Animation for Finale - Golden Treasure */
+        .coin {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle at 30% 30%, #fcd34d, #d4af37, #b45309);
+            border: 3px solid #fffbeb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #78350f;
+            z-index: 50;
+            animation: fall linear infinite;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0.5; }
+        }
+        
+        /* Magic Carpet Pattern */
+        .magic-carpet {
+            position: fixed;
+            bottom: -100px;
+            left: -150px;
+            font-size: 100px;
+            opacity: 0.1;
+            animation: carpet-fly 30s linear infinite;
+        }
+        
+        @keyframes carpet-fly {
+            0% { transform: translateX(-200px) translateY(0px) rotate(-10deg); }
+            100% { transform: translateX(120vw) translateY(-50vh) rotate(10deg); }
+        }
+        
+        /* Genie smoke effect */
+        .smoke {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(100, 200, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(20px);
+            animation: smoke-rise 4s ease-out infinite;
+        }
+        
+        @keyframes smoke-rise {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
+        }
+        
+        /* Canvas overlay for Genie Smoke */
+        #genieCanvas {
+            z-index: 5;
+        }
+        
+        /* Shimmering Gold Text Effect */
+        .shimmer-gold {
+            background: linear-gradient(
+                90deg,
+                #b8860b 0%,
+                #d4af37 25%,
+                #f0e68c 40%,
+                #ffd700 50%,
+                #f0e68c 60%,
+                #d4af37 75%,
+                #b8860b 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+    </style>
+</head>
+<body class="w-screen h-screen flex items-center justify-center">
+
+    <!-- Background Layer -->
+    <div class="bg-layer fixed inset-0 z-0"></div>
+    <div id="particles-container" class="fixed inset-0 z-0 pointer-events-none"></div>
+    
+    <!-- Magic Carpet Flying By -->
+    <div class="magic-carpet">🧙‍♂️</div>
+    
+    <!-- Genie Smoke Effect -->
+    <div class="smoke" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+    <div class="smoke" style="top: 60%; right: 15%; animation-delay: 2s;"></div>
+    
+    <!-- Genie Smoke Canvas Overlay -->
+    <canvas id="genieCanvas" class="fixed inset-0 w-full h-full pointer-events-none"></canvas>
+
+    <!-- Main App Container -->
+    <main class="relative z-10 w-full max-w-4xl px-4 flex flex-col items-center">
+        
+        <!-- The Content Frame -->
+        <div id="frame" class="magic-frame w-full min-h-[500px] rounded-xl p-8 md:p-12 flex flex-col items-center justify-center text-center slide-enter">
+            <!-- Corners -->
+            <div class="corner corner-tl"></div>
+            <div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div>
+            <div class="corner corner-br"></div>
+
+            <!-- Dynamic Content Injected Here -->
+            <div id="content" class="w-full">
+                <!-- Content will be loaded by JS -->
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div id="controls" class="mt-8 flex gap-6 opacity-0 transition-opacity duration-500">
+            <button id="btn-prev" class="group relative px-8 py-3 bg-gradient-to-br from-purple-900 to-purple-700 rounded-full border-2 border-amber-400 shadow-[0_0_20px_rgba(251,191,36,0.4)] hover:scale-110 transition-all active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed">
+                <span class="text-amber-100 font-serif tracking-widest uppercase text-sm">⬅️ Prev</span>
+            </button>
+            
+            <button id="btn-next" class="group relative px-8 py-3 bg-gradient-to-br from-orange-900 via-red-800 to-rose-700 rounded-full border-2 border-yellow-400 shadow-[0_0_20px_rgba(251,191,36,0.6)] hover:scale-110 transition-all active:scale-95">
+                <span id="btn-next-text" class="text-yellow-100 font-serif tracking-widest uppercase text-sm">Next ➡️</span>
+            </button>
+        </div>
+    </main>
+
+    <!-- 4. JavaScript Logic -->
+    <script>
+        // --- Data ---
+        const slides = [
+            {
+                type: 'welcome',
+                title: "Aladdin & Intertextuality",
+                subtitle: "The 2019 Remake Through Bassnett’s Lens"
+            },
+            {
+                type: 'qa',
+                id: 1,
+                question: "How does Bassnett's idea of intertextuality help explain Aladdin (2019) as more than just a remake of the animated film or the original tale?",
+                answer: "Bassnett's idea of intertextuality shows that Aladdin (2019) exists inside a network of earlier versions, including the animated movie and older story traditions. The live-action film does not simply copy one source, but reworks familiar characters, scenes, and themes for a new audience. This makes the film part of an ongoing chain of connected stories rather than a single, direct adaptation."
+            },
+            {
+                type: 'qa',
+                id: 2,
+                question: "Using Bassnett's idea that texts gain new meaning in new cultural contexts, how does the 2019 version of Aladdin reflect modern values differently than earlier versions?",
+                answer: "The 2019 film places much more emphasis on Jasmine's desire to lead and have political power. This reflects modern cultural conversations about gender and representation. According to Bassnett, stories change as they move across time and cultures, and Aladdin (2019) shows how the same story is reshaped to fit current social values rather than the priorities of earlier versions."
+            },
+            {
+                type: 'qa',
+                id: 3,
+                question: "Bassnett argues that readers and audiences play an important role in creating meaning. How does this apply to how audiences watch Aladdin (2019)?",
+                answer: "Modern viewers bring expectations about diversity, fairness, and strong female characters to the film. These expectations shape how the story is understood and judged. Bassnett's argument helps explain that the meaning of Aladdin (2019) is created not only by the filmmakers, but also by how today's audiences interpret and respond to the story."
+            },
+            {
+                type: 'qa',
+                id: 4,
+                question: "How can Bassnett's concept of creative rewriting or \"homage\" explain the relationship between Aladdin (2019) and earlier versions of the story?",
+                answer: "Rather than being a faithful copy, the live-action film reuses recognizable moments and characters while changing tone, dialogue, and character motivations. Bassnett's idea of creative rewriting shows that adaptation often involves transforming earlier works to create something new. In this way, Aladdin (2019) functions more as a reinterpretation than a direct retelling."
+            },
+            {
+                type: 'qa',
+                id: 5,
+                question: "How do music and performance in Aladdin (2019) support Bassnett's idea that stories change when they move across genres and media?",
+                answer: "The songs, choreography, and visual spectacle add emotional depth and shape how characters are understood, especially Jasmine and the Genie. Bassnett explains that when stories move across forms, such as from written or animated versions to live-action musical film, they gain new meanings. The musical format helps modern audiences connect to the story in ways that a purely written or older animated version cannot."
+            },
+            {
+                type: 'end',
+                title: "A Whole New World!",
+                subtitle: "Module 5 Complete"
+            }
+        ];
+
+        // --- State ---
+        let currentIndex = 0;
+        let isFinale = false;
+
+        // --- Elements ---
+        const contentEl = document.getElementById('content');
+        const frameEl = document.getElementById('frame');
+        const controlsEl = document.getElementById('controls');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const btnNextText = document.getElementById('btn-next-text');
+
+        // --- Functions ---
+
+        function render() {
+            // 1. Reset Animation
+            frameEl.classList.remove('slide-enter');
+            void frameEl.offsetWidth; // trigger reflow
+            frameEl.classList.add('slide-enter');
+
+            const slide = slides[currentIndex];
+            let html = '';
+
+            // 2. Generate HTML based on slide type
+            if (slide.type === 'welcome') {
+                html = `
+                    <div class="py-10">
+                        <div class="text-7xl mb-6 animate-pulse">🧞‍♂️</div>
+                        <h1 class="text-4xl md:text-6xl font-bold shimmer-gold mb-6 drop-shadow-lg">
+                            ${slide.title}
+                        </h1>
+                        <div class="text-5xl my-4">✨ 🪔 ✨</div>
+                        <h2 class="text-xl md:text-2xl text-purple-200 font-light tracking-[0.2em] uppercase border-t border-b border-amber-400/50 py-4 inline-block">
+                            ${slide.subtitle}
+                        </h2>
+                        <div class="mt-12">
+                            <button onclick="nextSlide()" class="px-10 py-4 bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 rounded-full text-white font-serif text-lg hover:scale-110 transition-transform shadow-[0_0_30px_rgba(251,191,36,0.6)] border-2 border-yellow-400">
+                                ✨ Enter the Cave of Wonders ✨
+                            </button>
+                        </div>
+                        <div class="mt-6 text-amber-300 text-sm italic">"You ain't never had a friend like me!"</div>
+                    </div>
+                `;
+                controlsEl.classList.add('opacity-0', 'pointer-events-none'); // Hide standard controls on welcome
+            } else if (slide.type === 'qa') {
+                controlsEl.classList.remove('opacity-0', 'pointer-events-none');
+                html = `
+                    <div class="flex flex-col h-full justify-between min-h-[300px]">
+                        <div class="mb-4">
+                            <div class="text-4xl mb-4">🕌</div>
+                            <span class="inline-block px-4 py-1 bg-gradient-to-r from-purple-900/60 to-blue-900/60 border border-amber-400 rounded-full text-amber-300 text-xs uppercase tracking-widest mb-6 shadow-[0_0_10px_rgba(251,191,36,0.4)]">
+                                📜 Question ${slide.id} of 5 📜
+                            </span>
+                            <h2 class="text-2xl md:text-4xl text-amber-100 font-serif leading-tight drop-shadow-lg">
+                                ${slide.question}
+                            </h2>
+                            <div class="flex items-center justify-center gap-3 my-6">
+                                <div class="w-16 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent"></div>
+                                <div class="text-2xl">🪔</div>
+                                <div class="w-16 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent"></div>
+                            </div>
+                        </div>
+                        <p class="text-lg md:text-2xl text-purple-100 font-light leading-relaxed max-w-2xl mx-auto bg-gradient-to-b from-purple-900/30 to-blue-900/30 p-6 rounded-lg border border-amber-500/30 shadow-[inset_0_0_20px_rgba(139,92,246,0.3)]">
+                            ${slide.answer}
+                        </p>
+                    </div>
+                `;
+            } else if (slide.type === 'end') {
+                controlsEl.classList.add('opacity-0', 'pointer-events-none');
+                html = `
+                    <div class="py-10 relative z-10">
+                        <div class="text-7xl mb-6 animate-bounce">🏆</div>
+                        <div class="text-6xl mb-4">💰 💎 💰</div>
+                        <h1 class="text-5xl md:text-7xl font-bold shimmer-gold mb-6 drop-shadow-[0_0_30px_rgba(251,191,36,0.8)]">
+                            ${slide.title}
+                        </h1>
+                        <div class="text-5xl my-4">✨ 🧞 ✨</div>
+                        <p class="text-xl text-purple-200 italic mb-6 max-w-lg mx-auto font-serif border-t border-b border-amber-400/50 py-4">
+                            "Like so many things, it is not what is outside, but what is inside that counts."
+                        </p>
+                        <p class="text-lg text-amber-300 mb-10">
+                            🪔 ${slide.subtitle} 🪔
+                        </p>
+                        <button onclick="restart()" class="mt-4 px-8 py-3 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full transition-all uppercase text-sm tracking-widest shadow-[0_0_20px_rgba(251,191,36,0.4)] hover:scale-110">
+                            🌟 Make Another Wish? 🌟
+                        </button>
+                    </div>
+                `;
+                if (!isFinale) startFinaleEffect();
+                isFinale = true;
+            }
+
+            contentEl.innerHTML = html;
+            
+            // Update Buttons
+            btnPrev.disabled = currentIndex <= 1; // 0 is welcome, 1 is first slide
+            btnNextText.innerText = currentIndex === slides.length - 2 ? 'Finish' : 'Next';
+        }
+
+        function nextSlide() {
+            if (currentIndex < slides.length - 1) {
+                currentIndex++;
+                render();
+            }
+        }
+
+        function prevSlide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                render();
+            }
+        }
+
+        function restart() {
+            currentIndex = 0;
+            isFinale = false;
+            // Clear coins
+            const coins = document.querySelectorAll('.coin');
+            coins.forEach(c => c.remove());
+            render();
+        }
+
+        // --- Effects ---
+
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            for(let i=0; i<40; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                p.style.left = Math.random() * 100 + '%';
+                p.style.width = (Math.random() * 5 + 2) + 'px';
+                p.style.height = p.style.width;
+                p.style.animationDuration = (Math.random() * 12 + 6) + 's';
+                p.style.animationDelay = (Math.random() * 8) + 's';
+                // Mix of gold, amber, and magical blue sparkles
+                const colors = ['#fbbf24', '#d4af37', '#f59e0b', '#14b8a6', '#fcd34d'];
+                p.style.background = colors[i % colors.length];
+                container.appendChild(p);
+            }
+        }
+
+        function startFinaleEffect() {
+            const body = document.body;
+            // Create 60 coins for treasure rain
+            for(let i=0; i<60; i++) {
+                setTimeout(() => {
+                    if(!isFinale) return;
+                    const coin = document.createElement('div');
+                    coin.classList.add('coin');
+                    const symbols = ['💰', '💎', '✨', '🪙', '👑'];
+                    coin.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                    coin.style.left = Math.random() * 100 + '%';
+                    coin.style.animationDuration = (Math.random() * 2.5 + 2.5) + 's';
+                    body.appendChild(coin);
+                    
+                    // Cleanup coin after animation
+                    setTimeout(() => coin.remove(), 6000);
+                }, i * 150);
+            }
+        }
+
+        // --- Parallax Effect ---
+        function initParallax() {
+            const magicFrame = document.getElementById('frame');
+            const bgLayer = document.querySelector('.bg-layer');
+            
+            window.addEventListener('mousemove', (e) => {
+                // Get mouse position relative to center of screen (from -1 to 1)
+                const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                const mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+                
+                // Calculate rotation (max 5 degrees)
+                const rotateY = mouseX * 5; // Horizontal rotation
+                const rotateX = -mouseY * 5; // Vertical rotation (inverted)
+                
+                // Apply 3D transform to magic frame
+                magicFrame.style.transform = `perspective(1000px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+                magicFrame.style.transition = 'transform 0.1s ease-out';
+                
+                // Move background layer in opposite direction for depth
+                const bgX = -mouseX * 20; // Subtle horizontal shift
+                const bgY = -mouseY * 20; // Subtle vertical shift
+                bgLayer.style.transform = `translate(${bgX}px, ${bgY}px) scale(1.1)`;
+                bgLayer.style.transition = 'transform 0.1s ease-out';
+            });
+            
+            // Reset on mouse leave
+            window.addEventListener('mouseleave', () => {
+                magicFrame.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+                bgLayer.style.transform = 'translate(0px, 0px) scale(1.1)';
+            });
+        }
+
+        // --- Init ---
+        btnPrev.addEventListener('click', prevSlide);
+        btnNext.addEventListener('click', nextSlide);
+        
+        createParticles();
+        render();
+        initParallax();
+
+        // --- GenieSmoke Class ---
+        class GenieSmoke {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.mouse = { x: 0, y: 0 };
+                
+                // Set canvas size
+                this.resizeCanvas();
+                window.addEventListener('resize', () => this.resizeCanvas());
+                
+                // Track mouse position
+                document.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                    this.emitParticles();
+                });
+                
+                // Start animation loop
+                this.animate();
+            }
+            
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            emitParticles() {
+                // Emit 2-3 particles on each mouse move
+                for (let i = 0; i < 3; i++) {
+                    this.particles.push({
+                        x: this.mouse.x + (Math.random() - 0.5) * 20,
+                        y: this.mouse.y + (Math.random() - 0.5) * 20,
+                        vx: (Math.random() - 0.5) * 2,
+                        vy: -Math.random() * 2 - 1, // Drift upwards
+                        size: Math.random() * 15 + 5,
+                        life: 1.0, // Start at full opacity
+                        decay: Math.random() * 0.01 + 0.005
+                    });
+                }
+            }
+            
+            updateParticles() {
+                // Update and filter out dead particles
+                this.particles = this.particles.filter(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.life -= p.decay;
+                    p.size *= 0.98; // Shrink slightly over time
+                    return p.life > 0;
+                });
+            }
+            
+            getParticleColor(life) {
+                // Color transition: Deep Blue -> Teal -> Gold
+                if (life > 0.66) {
+                    // Deep Blue to Teal
+                    const t = (life - 0.66) / 0.34;
+                    const r = Math.floor(30 + (20 - 30) * (1 - t));
+                    const g = Math.floor(58 + (184 - 58) * (1 - t));
+                    const b = Math.floor(138 + (166 - 138) * (1 - t));
+                    return `rgba(${r}, ${g}, ${b}, ${life})`;
+                } else if (life > 0.33) {
+                    // Teal to Gold
+                    const t = (life - 0.33) / 0.33;
+                    const r = Math.floor(20 + (212 - 20) * (1 - t));
+                    const g = Math.floor(184 + (175 - 184) * (1 - t));
+                    const b = Math.floor(166 + (55 - 166) * (1 - t));
+                    return `rgba(${r}, ${g}, ${b}, ${life})`;
+                } else {
+                    // Gold fade out
+                    const r = 212;
+                    const g = 175;
+                    const b = 55;
+                    return `rgba(${r}, ${g}, ${b}, ${life})`;
+                }
+            }
+            
+            drawParticles() {
+                this.particles.forEach(p => {
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    
+                    // Create gradient for glow effect
+                    const gradient = this.ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+                    gradient.addColorStop(0, this.getParticleColor(p.life));
+                    gradient.addColorStop(0.5, this.getParticleColor(p.life * 0.7));
+                    gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fill();
+                });
+            }
+            
+            animate() {
+                // Clear canvas
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Update and draw particles
+                this.updateParticles();
+                this.drawParticles();
+                
+                // Continue animation loop
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // Initialize GenieSmoke
+        const genieSmoke = new GenieSmoke('genieCanvas');
+
+    </script>
+</body>
+</html>
