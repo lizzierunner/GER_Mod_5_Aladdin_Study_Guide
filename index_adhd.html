@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 5 Study Guide - ADHD Friendly</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --gold: #d4af37;
+            --rich-gold: #f59e0b;
+            --deep-purple: #4c1d95;
+            --arabian-blue: #1e3a8a;
+            --desert-orange: #ea580c;
+            --magic-teal: #14b8a6;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #000;
+            overflow-x: hidden;
+            color: white;
+        }
+
+        h1, h2, h3, .cinematic-text {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Animated Background */
+        .bg-layer {
+            background: radial-gradient(circle at 30% 20%, #1e1b4b 0%, #312e81 25%, #4c1d95 50%, #1e3a8a 75%, #0f172a 100%);
+            animation: pulse-bg 15s infinite alternate;
+        }
+        
+        @keyframes pulse-bg {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Shimmer Gold Text */
+        .shimmer-gold {
+            background: linear-gradient(90deg, #b8860b 0%, #d4af37 25%, #f0e68c 40%, #ffd700 50%, #f0e68c 60%, #d4af37 75%, #b8860b 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Flashcard Flip Animation */
+        .flashcard-container {
+            perspective: 1000px;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.95) 0%, rgba(76, 29, 149, 0.9) 100%);
+            border: 3px solid #d4af37;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.9) 0%, rgba(30, 58, 138, 0.95) 100%);
+            border: 3px solid #14b8a6;
+            transform: rotateY(180deg);
+        }
+
+        /* Quiz Animations */
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .correct-answer {
+            animation: correctPulse 0.5s ease-in-out;
+            background: linear-gradient(135deg, #10b981, #14b8a6) !important;
+        }
+
+        .wrong-answer {
+            animation: shake 0.5s ease-in-out;
+            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 8px;
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #ffd700);
+            transition: width 0.5s ease-out;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Particles */
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: float-up linear infinite;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5) rotate(360deg); opacity: 0; }
+        }
+
+        /* Mode Selector Buttons */
+        .mode-btn {
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Timer Animation */
+        @keyframes timerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .timer-warning {
+            animation: timerPulse 1s infinite;
+            color: #ef4444 !important;
+        }
+
+        /* Focus indicators for ADHD */
+        .focus-ring:focus {
+            outline: 3px solid #ffd700;
+            outline-offset: 4px;
+        }
+
+        /* Coin Animation */
+        .coin {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle at 30% 30%, #fcd34d, #d4af37, #b45309);
+            border: 3px solid #fffbeb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #78350f;
+            z-index: 50;
+            animation: fall linear infinite;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0.5; }
+        }
+
+        /* Scroll styling for flashcard mode */
+        .custom-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(76, 29, 149, 0.3);
+            border-radius: 10px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #d4af37, #ffd700);
+            border-radius: 10px;
+        }
+
+        /* Celebration confetti */
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            z-index: 1000;
+            animation: confetti-fall 3s linear;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Background Layer -->
+    <div class="bg-layer fixed inset-0 z-0"></div>
+    <div id="particles-container" class="fixed inset-0 z-0 pointer-events-none"></div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 min-h-screen flex flex-col">
+        
+        <!-- Header with Progress -->
+        <header class="p-4 md:p-6">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-3xl md:text-5xl font-bold shimmer-gold text-center mb-4">
+                    🧞‍♂️ Module 5 Study Guide 🪔
+                </h1>
+                <div class="progress-bar max-w-2xl mx-auto">
+                    <div id="progress" class="progress-fill" style="width: 0%"></div>
+                </div>
+                <p id="progress-text" class="text-center text-amber-300 mt-2 text-sm">Let's begin your adventure!</p>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex items-center justify-center p-4">
+            <div class="w-full max-w-5xl">
+                
+                <!-- Mode Selection Screen -->
+                <div id="mode-selection" class="text-center">
+                    <div class="text-6xl mb-6 animate-bounce">🏺</div>
+                    <h2 class="text-3xl md:text-5xl font-bold text-amber-100 mb-4">Choose Your Path!</h2>
+                    <p class="text-purple-200 mb-12 text-lg">How would you like to study?</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                        <!-- Flashcards Mode -->
+                        <button onclick="startMode('flashcards')" class="mode-btn p-8 bg-gradient-to-br from-purple-900 to-purple-700 rounded-2xl border-4 border-amber-400 shadow-[0_0_30px_rgba(251,191,36,0.4)] focus-ring">
+                            <div class="text-6xl mb-4">🃏</div>
+                            <h3 class="text-2xl font-bold text-amber-300 mb-2">Flashcards</h3>
+                            <p class="text-purple-100 text-sm">Quick, bite-sized learning with flip cards</p>
+                            <div class="mt-4 text-xs text-amber-200">✨ Best for visual learners</div>
+                        </button>
+
+                        <!-- Quiz Mode -->
+                        <button onclick="startMode('quiz')" class="mode-btn p-8 bg-gradient-to-br from-orange-900 to-red-800 rounded-2xl border-4 border-yellow-400 shadow-[0_0_30px_rgba(251,191,36,0.6)] focus-ring">
+                            <div class="text-6xl mb-4">🎯</div>
+                            <h3 class="text-2xl font-bold text-yellow-300 mb-2">Quiz</h3>
+                            <p class="text-orange-100 text-sm">Test your knowledge with multiple choice</p>
+                            <div class="mt-4 text-xs text-yellow-200">⚡ Instant feedback!</div>
+                        </button>
+
+                        <!-- Study Mode -->
+                        <button onclick="startMode('study')" class="mode-btn p-8 bg-gradient-to-br from-teal-900 to-blue-800 rounded-2xl border-4 border-cyan-400 shadow-[0_0_30px_rgba(20,184,166,0.4)] focus-ring">
+                            <div class="text-6xl mb-4">📚</div>
+                            <h3 class="text-2xl font-bold text-cyan-300 mb-2">Study</h3>
+                            <p class="text-blue-100 text-sm">Read through all content at your pace</p>
+                            <div class="mt-4 text-xs text-cyan-200">📖 Detailed info</div>
+                        </button>
+                    </div>
+
+                    <div class="mt-12 text-amber-300 italic">
+                        "Do you trust me?" - Aladdin 🪔
+                    </div>
+                </div>
+
+                <!-- Flashcard Screen -->
+                <div id="flashcard-screen" class="hidden">
+                    <div class="text-center mb-6">
+                        <span class="inline-block px-6 py-2 bg-purple-900/60 border-2 border-amber-400 rounded-full text-amber-300 text-sm font-bold">
+                            🃏 Flashcard <span id="card-number">1</span> of <span id="card-total">0</span>
+                        </span>
+                    </div>
+
+                    <div class="flashcard-container mx-auto" style="height: 400px; max-width: 600px;">
+                        <div id="flashcard" class="flashcard" onclick="flipCard()">
+                            <div class="flashcard-front cursor-pointer">
+                                <div class="text-5xl mb-6">💡</div>
+                                <h3 id="card-front-text" class="text-2xl md:text-3xl font-bold text-amber-100 text-center">
+                                    Click to reveal!
+                                </h3>
+                                <div class="mt-6 text-purple-300 text-sm">👆 Click or Tap to flip!</div>
+                            </div>
+                            <div class="flashcard-back cursor-pointer">
+                                <div class="text-5xl mb-6">✨</div>
+                                <p id="card-back-text" class="text-lg md:text-xl text-white text-center leading-relaxed">
+                                    Answer appears here
+                                </p>
+                                <div class="mt-6 text-teal-200 text-sm">👆 Click to flip back!</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center gap-4 mt-8">
+                        <button id="prev-card" onclick="prevCard()" class="px-8 py-3 bg-purple-800 hover:bg-purple-700 rounded-full border-2 border-amber-400 text-amber-100 font-bold disabled:opacity-30 disabled:cursor-not-allowed transition-all focus-ring">
+                            ⬅️ Previous
+                        </button>
+                        <button onclick="shuffleCards()" class="px-8 py-3 bg-teal-800 hover:bg-teal-700 rounded-full border-2 border-cyan-400 text-cyan-100 font-bold transition-all focus-ring">
+                            🔀 Shuffle
+                        </button>
+                        <button id="next-card" onclick="nextCard()" class="px-8 py-3 bg-orange-800 hover:bg-orange-700 rounded-full border-2 border-yellow-400 text-yellow-100 font-bold transition-all focus-ring">
+                            Next ➡️
+                        </button>
+                    </div>
+
+                    <button onclick="returnToMenu()" class="mt-8 mx-auto block px-6 py-2 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full transition-all focus-ring">
+                        🏠 Back to Menu
+                    </button>
+                </div>
+
+                <!-- Quiz Screen -->
+                <div id="quiz-screen" class="hidden">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="inline-block px-6 py-2 bg-orange-900/60 border-2 border-yellow-400 rounded-full text-yellow-300 text-sm font-bold">
+                                🎯 Question <span id="quiz-number">1</span> of <span id="quiz-total">0</span>
+                            </span>
+                            <div id="quiz-timer" class="px-4 py-2 bg-blue-900/60 border-2 border-cyan-400 rounded-full text-cyan-300 text-sm font-bold">
+                                ⏱️ <span id="timer-value">30</span>s
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-purple-900/60 to-blue-900/60 border-3 border-amber-400 rounded-2xl p-8 shadow-[0_0_40px_rgba(251,191,36,0.3)]">
+                            <h3 id="quiz-question" class="text-xl md:text-2xl text-amber-100 font-bold mb-8 text-center">
+                                Question appears here
+                            </h3>
+
+                            <div id="quiz-options" class="space-y-4">
+                                <!-- Options will be inserted here -->
+                            </div>
+
+                            <div id="quiz-feedback" class="hidden mt-6 p-4 rounded-lg text-center">
+                                <!-- Feedback appears here -->
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center gap-4 mt-8">
+                            <button id="quiz-next" onclick="nextQuizQuestion()" class="hidden px-8 py-3 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full border-2 border-yellow-400 text-white font-bold hover:scale-105 transition-all focus-ring">
+                                Next Question ➡️
+                            </button>
+                        </div>
+
+                        <button onclick="returnToMenu()" class="mt-8 mx-auto block px-6 py-2 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full transition-all focus-ring">
+                            🏠 Back to Menu
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Study Screen -->
+                <div id="study-screen" class="hidden">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="text-center mb-6">
+                            <span class="inline-block px-6 py-2 bg-teal-900/60 border-2 border-cyan-400 rounded-full text-cyan-300 text-sm font-bold">
+                                📚 Section <span id="study-number">1</span> of <span id="study-total">0</span>
+                            </span>
+                        </div>
+
+                        <div id="study-content" class="bg-gradient-to-br from-purple-900/40 to-blue-900/40 border-3 border-amber-400 rounded-2xl p-8 shadow-[0_0_40px_rgba(251,191,36,0.3)] max-h-[500px] overflow-y-auto custom-scroll">
+                            <!-- Study content will be inserted here -->
+                        </div>
+
+                        <div class="flex justify-center gap-4 mt-8">
+                            <button id="prev-study" onclick="prevStudy()" class="px-8 py-3 bg-teal-800 hover:bg-teal-700 rounded-full border-2 border-cyan-400 text-cyan-100 font-bold disabled:opacity-30 disabled:cursor-not-allowed transition-all focus-ring">
+                                ⬅️ Previous
+                            </button>
+                            <button id="next-study" onclick="nextStudy()" class="px-8 py-3 bg-blue-800 hover:bg-blue-700 rounded-full border-2 border-sky-400 text-sky-100 font-bold transition-all focus-ring">
+                                Next ➡️
+                            </button>
+                        </div>
+
+                        <button onclick="returnToMenu()" class="mt-8 mx-auto block px-6 py-2 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full transition-all focus-ring">
+                            🏠 Back to Menu
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results Screen -->
+                <div id="results-screen" class="hidden text-center">
+                    <div class="text-7xl mb-6 animate-bounce">🏆</div>
+                    <h2 class="text-4xl md:text-6xl font-bold shimmer-gold mb-6">Amazing Work!</h2>
+                    <div class="text-6xl mb-8">💰 💎 💰</div>
+                    
+                    <div id="score-display" class="bg-gradient-to-br from-purple-900/60 to-blue-900/60 border-4 border-amber-400 rounded-2xl p-8 max-w-md mx-auto mb-8">
+                        <div class="text-5xl font-bold text-amber-300 mb-2">
+                            <span id="final-score">0</span>/<span id="total-questions">0</span>
+                        </div>
+                        <div class="text-xl text-purple-200">Correct Answers</div>
+                        <div id="percentage" class="text-3xl text-teal-300 mt-4 font-bold">100%</div>
+                    </div>
+
+                    <p class="text-xl text-purple-200 italic mb-6 max-w-lg mx-auto font-serif">
+                        "Like so many things, it is not what is outside, but what is inside that counts." 🪔
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="startMode('quiz')" class="px-8 py-3 bg-gradient-to-r from-orange-600 to-red-600 rounded-full border-2 border-yellow-400 text-white font-bold hover:scale-105 transition-all focus-ring">
+                            🔄 Try Quiz Again
+                        </button>
+                        <button onclick="returnToMenu()" class="px-8 py-3 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full font-bold transition-all focus-ring">
+                            🏠 Back to Menu
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="p-4 text-center text-amber-300/50 text-sm">
+            ✨ "You ain't never had a study guide like me!" ✨
+        </footer>
+    </div>
+
+    <script>
+        // ==================== DATA ====================
+        
+        const flashcardsData = [
+            { front: "What is the Big Idea of Module 5?", back: "Stories exist in networks of connections rather than as simple originals and copies. Meaning is created as stories move across time, cultures, languages, media, and audiences." },
+            { front: "What is Influence?", back: "An older approach that tries to prove that one author directly caused another author's work. Bassnett argues this is often limited and difficult to prove." },
+            { front: "What is Intertextuality?", back: "Texts exist in conversation with other texts. Meaning comes from a web of connections rather than a single source." },
+            { front: "What is Translation in this context?", back: "Stories gain new meanings as they move between languages and cultures." },
+            { front: "What role does the Reader/Audience play?", back: "Readers and viewers actively create meaning through their expectations and experiences." },
+            { front: "What is Creative Rewriting or Homage?", back: "Reworking earlier material in new ways rather than copying it." },
+            { front: "How do Disney versions differ from Grimm fairy tales?", back: "Grimm uses violence and harsh punishment to enforce moral lessons. Disney softens violence and focuses on hope, romance, and emotional growth for modern family audiences." },
+            { front: "How does Tangled differ from Rapunzel?", back: "Grimm includes pregnancy, exile, blindness, and long suffering. Tangled removes extreme punishment and focuses on identity, freedom, and emotional growth." },
+            { front: "How does Disney's Snow White differ from Grimm's version?", back: "Grimm includes cannibalism imagery and brutal punishment. Disney removes graphic justice and replaces it with implied moral resolution." },
+            { front: "How does The Lion King demonstrate intertextuality?", back: "It draws on Hamlet, and The Lion King II draws on Romeo and Juliet. These films rework major themes for modern family audiences." },
+            { front: "What makes Aladdin (2019) different?", back: "The live-action reflects modern expectations about representation, gender, and leadership. Jasmine's political agency is emphasized more strongly than in earlier versions." },
+            { front: "Why is music important in musicals?", back: "Music supports emotional arcs, speeds storytelling, and fits fairy-tale fantasy. Songs help audiences understand characters quickly." }
+        ];
+
+        const quizData = [
+            {
+                question: "Why should Disney adaptations not be judged only by faithfulness to Grimm?",
+                options: [
+                    "Intertextuality shows adaptations exist within a network of texts shaped by modern culture, media form, and audiences",
+                    "Disney always improves upon Grimm's stories",
+                    "Grimm's stories are outdated and irrelevant",
+                    "Disney has the copyright to change whatever they want"
+                ],
+                correct: 0,
+                explanation: "Intertextuality shows that adaptations exist within a network of texts shaped by modern culture, media form, and audiences. Meaning changes as stories move across time and formats."
+            },
+            {
+                question: "How does Tangled change the moral message of Rapunzel?",
+                options: [
+                    "It adds more violence to make it exciting",
+                    "It replaces physical punishment with emotional growth and empowerment",
+                    "It makes Rapunzel weaker as a character",
+                    "It removes all moral lessons"
+                ],
+                correct: 1,
+                explanation: "Tangled replaces physical punishment with emotional growth and empowerment, reflecting modern values and family-friendly storytelling."
+            },
+            {
+                question: "How does Snow White reflect changing ideas about justice?",
+                options: [
+                    "Both versions have the same justice system",
+                    "Disney adds more punishment than Grimm",
+                    "Grimm emphasizes brutal punishment, while Disney shifts toward softer moral resolution",
+                    "Neither version has any justice"
+                ],
+                correct: 2,
+                explanation: "Grimm emphasizes brutal punishment, while Disney shifts toward softer moral resolution suitable for modern viewers."
+            },
+            {
+                question: "How does The Lion King demonstrate intertextuality?",
+                options: [
+                    "It's a completely original story with no connections",
+                    "It reworks Hamlet's themes of identity and responsibility into a new genre and medium",
+                    "It copies Shakespeare word for word",
+                    "It has nothing to do with other stories"
+                ],
+                correct: 1,
+                explanation: "It reworks Hamlet's themes of identity and responsibility into a new genre and medium, creating new meanings."
+            },
+            {
+                question: "How does Aladdin (2019) reflect modern cultural context?",
+                options: [
+                    "It's identical to the animated version",
+                    "It removes all cultural elements",
+                    "It emphasizes representation and female leadership, showing how stories gain new meaning as audience expectations change",
+                    "It focuses only on romance"
+                ],
+                correct: 2,
+                explanation: "The film emphasizes representation and female leadership, showing how stories gain new meaning as audience expectations change."
+            },
+            {
+                question: "How does Bassnett's intertextuality explain Aladdin (2019)?",
+                options: [
+                    "It's just a remake with better special effects",
+                    "It exists in a network of earlier versions, reworking familiar elements for a new audience",
+                    "It ignores all previous versions",
+                    "It's exactly the same as the original tale"
+                ],
+                correct: 1,
+                explanation: "Bassnett's intertextuality shows Aladdin (2019) exists inside a network of earlier versions, reworking familiar characters, scenes, and themes for a new audience."
+            },
+            {
+                question: "How does Aladdin (2019) reflect modern values differently?",
+                options: [
+                    "It removes all female characters",
+                    "It places more emphasis on Jasmine's desire to lead and have political power",
+                    "It makes all characters less important",
+                    "It ignores modern values completely"
+                ],
+                correct: 1,
+                explanation: "The 2019 film places much more emphasis on Jasmine's desire to lead and have political power, reflecting modern cultural conversations about gender and representation."
+            },
+            {
+                question: "What role do audiences play according to Bassnett?",
+                options: [
+                    "Audiences have no role in creating meaning",
+                    "Audiences only watch passively",
+                    "Modern viewers bring expectations that shape how the story is understood and judged",
+                    "Audiences should ignore their expectations"
+                ],
+                correct: 2,
+                explanation: "Modern viewers bring expectations about diversity, fairness, and strong female characters to the film. These expectations shape how the story is understood and judged."
+            },
+            {
+                question: "What is creative rewriting or 'homage' in Aladdin (2019)?",
+                options: [
+                    "Making an exact copy of earlier versions",
+                    "Reusing recognizable moments while changing tone, dialogue, and motivations",
+                    "Ignoring all earlier versions",
+                    "Adding violence to the story"
+                ],
+                correct: 1,
+                explanation: "The live-action film reuses recognizable moments and characters while changing tone, dialogue, and character motivations, functioning as a reinterpretation rather than direct retelling."
+            },
+            {
+                question: "How does music support Bassnett's ideas in Aladdin (2019)?",
+                options: [
+                    "Music has no role in the story",
+                    "Music only exists for entertainment",
+                    "Songs, choreography, and spectacle add emotional depth and help audiences connect in new ways",
+                    "Music makes the film worse"
+                ],
+                correct: 2,
+                explanation: "The songs, choreography, and visual spectacle add emotional depth. When stories move across forms, they gain new meanings. The musical format helps modern audiences connect in ways that written or older animated versions cannot."
+            }
+        ];
+
+        const studyData = [
+            {
+                title: "🌟 Big Idea",
+                icon: "📚",
+                content: "Module 5 focuses on how stories exist in <strong>networks of connections</strong> rather than as simple originals and copies.<br><br>Meaning is created as stories move across:<br>• Time<br>• Cultures<br>• Languages<br>• Media<br>• Audiences"
+            },
+            {
+                title: "🔑 Key Terms",
+                icon: "📖",
+                content: `
+                    <div class="space-y-4 text-left">
+                        <div class="p-4 bg-purple-900/30 rounded-lg">
+                            <h4 class="font-bold text-amber-300 mb-2">Influence</h4>
+                            <p class="text-sm">An older approach that tries to prove that one author directly caused another author's work. Bassnett argues this is often limited and difficult to prove.</p>
+                        </div>
+                        <div class="p-4 bg-purple-900/30 rounded-lg">
+                            <h4 class="font-bold text-amber-300 mb-2">Intertextuality</h4>
+                            <p class="text-sm">Texts exist in conversation with other texts. Meaning comes from a web of connections rather than a single source.</p>
+                        </div>
+                        <div class="p-4 bg-purple-900/30 rounded-lg">
+                            <h4 class="font-bold text-amber-300 mb-2">Translation</h4>
+                            <p class="text-sm">Stories gain new meanings as they move between languages and cultures.</p>
+                        </div>
+                        <div class="p-4 bg-purple-900/30 rounded-lg">
+                            <h4 class="font-bold text-amber-300 mb-2">Reader/Audience</h4>
+                            <p class="text-sm">Readers and viewers actively create meaning through their expectations and experiences.</p>
+                        </div>
+                        <div class="p-4 bg-purple-900/30 rounded-lg">
+                            <h4 class="font-bold text-amber-300 mb-2">Creative Rewriting or Homage</h4>
+                            <p class="text-sm">Reworking earlier material in new ways rather than copying it.</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "🏰 Disney vs Grimm",
+                icon: "🏰",
+                content: "Grimm fairy tales use <strong>violence and harsh punishment</strong> to enforce moral lessons.<br><br>Disney versions <strong>soften violence</strong> and focus on:<br>• Hope<br>• Romance<br>• Emotional growth<br><br>This shift fits modern family audiences."
+            },
+            {
+                title: "👸 Rapunzel vs Tangled",
+                icon: "👸",
+                content: "<strong>Grimm includes:</strong><br>• Pregnancy<br>• Exile<br>• Blindness<br>• Long suffering<br><br><strong>Tangled removes:</strong><br>• Extreme punishment<br><br><strong>Tangled focuses on:</strong><br>• Identity<br>• Freedom<br>• Emotional growth"
+            },
+            {
+                title: "🍎 Snow White",
+                icon: "🍎",
+                content: "<strong>Grimm includes:</strong><br>• Cannibalism imagery<br>• Brutal punishment<br><br><strong>Disney removes:</strong><br>• Graphic justice<br><br><strong>Disney replaces with:</strong><br>• Implied moral resolution<br>• Softer endings"
+            },
+            {
+                title: "🦁 The Lion King",
+                icon: "🦁",
+                content: "The Lion King demonstrates <strong>intertextuality</strong>:<br><br>• Draws on <strong>Hamlet</strong><br>• The Lion King II draws on <strong>Romeo and Juliet</strong><br><br>These films rework major themes for modern family audiences, creating new meanings in a new medium."
+            },
+            {
+                title: "🪔 Aladdin (2019)",
+                icon: "🪔",
+                content: "The live-action Aladdin reflects <strong>modern expectations</strong> about:<br>• Representation<br>• Gender<br>• Leadership<br><br><strong>Jasmine's political agency</strong> is emphasized more strongly than in earlier versions, showing how stories change with audience expectations."
+            },
+            {
+                title: "🎵 Music and Musicals",
+                icon: "🎼",
+                content: "Music in adaptations:<br><br>• <strong>Supports emotional arcs</strong><br>• <strong>Speeds storytelling</strong><br>• <strong>Fits fairy-tale fantasy</strong><br>• <strong>Helps audiences understand characters quickly</strong><br><br>Songs add a new dimension that written or non-musical versions cannot provide."
+            }
+        ];
+
+        // ==================== STATE ====================
+        
+        let currentMode = 'menu';
+        let currentIndex = 0;
+        let score = 0;
+        let quizTimer = null;
+        let timeLeft = 30;
+        let selectedAnswer = null;
+        let currentFlashcards = [...flashcardsData];
+
+        // ==================== HELPER FUNCTIONS ====================
+        
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            for(let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                p.style.left = Math.random() * 100 + '%';
+                p.style.width = (Math.random() * 4 + 2) + 'px';
+                p.style.height = p.style.width;
+                p.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                p.style.animationDelay = (Math.random() * 5) + 's';
+                const colors = ['#fbbf24', '#d4af37', '#f59e0b', '#14b8a6'];
+                p.style.background = colors[i % colors.length];
+                container.appendChild(p);
+            }
+        }
+
+        function updateProgress() {
+            let total = 0;
+            let current = 0;
+            let text = '';
+
+            if (currentMode === 'flashcards') {
+                total = currentFlashcards.length;
+                current = currentIndex + 1;
+                text = `Flashcard ${current} of ${total}`;
+            } else if (currentMode === 'quiz') {
+                total = quizData.length;
+                current = currentIndex + 1;
+                text = `Question ${current} of ${total} • Score: ${score}/${total}`;
+            } else if (currentMode === 'study') {
+                total = studyData.length;
+                current = currentIndex + 1;
+                text = `Section ${current} of ${total}`;
+            }
+
+            const percentage = (current / total) * 100;
+            document.getElementById('progress').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = text;
+        }
+
+        function showScreen(screenId) {
+            const screens = ['mode-selection', 'flashcard-screen', 'quiz-screen', 'study-screen', 'results-screen'];
+            screens.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        function celebrate() {
+            for(let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1', '#f7b731'][Math.floor(Math.random() * 5)];
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 50);
+            }
+        }
+
+        // ==================== MODE FUNCTIONS ====================
+        
+        function startMode(mode) {
+            currentMode = mode;
+            currentIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+
+            if (mode === 'flashcards') {
+                currentFlashcards = [...flashcardsData];
+                document.getElementById('card-total').textContent = currentFlashcards.length;
+                showScreen('flashcard-screen');
+                loadFlashcard();
+            } else if (mode === 'quiz') {
+                showScreen('quiz-screen');
+                document.getElementById('quiz-total').textContent = quizData.length;
+                loadQuizQuestion();
+            } else if (mode === 'study') {
+                document.getElementById('study-total').textContent = studyData.length;
+                showScreen('study-screen');
+                loadStudyContent();
+            }
+
+            updateProgress();
+        }
+
+        function returnToMenu() {
+            currentMode = 'menu';
+            showScreen('mode-selection');
+            document.getElementById('progress').style.width = '0%';
+            document.getElementById('progress-text').textContent = "Let's begin your adventure!";
+            if (quizTimer) {
+                clearInterval(quizTimer);
+                quizTimer = null;
+            }
+        }
+
+        // ==================== FLASHCARD FUNCTIONS ====================
+        
+        function loadFlashcard() {
+            const card = currentFlashcards[currentIndex];
+            document.getElementById('card-front-text').textContent = card.front;
+            document.getElementById('card-back-text').textContent = card.back;
+            document.getElementById('card-number').textContent = currentIndex + 1;
+            document.getElementById('flashcard').classList.remove('flipped');
+            
+            document.getElementById('prev-card').disabled = currentIndex === 0;
+            document.getElementById('next-card').disabled = currentIndex === currentFlashcards.length - 1;
+            
+            updateProgress();
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('flipped');
+        }
+
+        function nextCard() {
+            if (currentIndex < currentFlashcards.length - 1) {
+                currentIndex++;
+                loadFlashcard();
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadFlashcard();
+            }
+        }
+
+        function shuffleCards() {
+            currentFlashcards.sort(() => Math.random() - 0.5);
+            currentIndex = 0;
+            loadFlashcard();
+        }
+
+        // ==================== QUIZ FUNCTIONS ====================
+        
+        function loadQuizQuestion() {
+            if (quizTimer) {
+                clearInterval(quizTimer);
+            }
+
+            const question = quizData[currentIndex];
+            document.getElementById('quiz-question').textContent = question.question;
+            document.getElementById('quiz-number').textContent = currentIndex + 1;
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('quiz-next').classList.add('hidden');
+            selectedAnswer = null;
+            timeLeft = 30;
+            document.getElementById('timer-value').textContent = timeLeft;
+            document.getElementById('quiz-timer').classList.remove('timer-warning');
+
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'w-full p-4 bg-gradient-to-r from-purple-800 to-blue-800 hover:from-purple-700 hover:to-blue-700 rounded-lg border-2 border-purple-400 text-white text-left transition-all focus-ring';
+                button.innerHTML = `<span class="font-bold text-amber-300">${String.fromCharCode(65 + index)}.</span> ${option}`;
+                button.onclick = () => selectAnswer(index);
+                optionsContainer.appendChild(button);
+            });
+
+            quizTimer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-value').textContent = timeLeft;
+                
+                if (timeLeft <= 10) {
+                    document.getElementById('quiz-timer').classList.add('timer-warning');
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(quizTimer);
+                    if (selectedAnswer === null) {
+                        selectAnswer(-1); // Auto-submit as wrong
+                    }
+                }
+            }, 1000);
+
+            updateProgress();
+        }
+
+        function selectAnswer(index) {
+            if (selectedAnswer !== null) return;
+
+            clearInterval(quizTimer);
+            selectedAnswer = index;
+
+            const question = quizData[currentIndex];
+            const buttons = document.getElementById('quiz-options').children;
+            const feedback = document.getElementById('quiz-feedback');
+
+            if (index === question.correct) {
+                score++;
+                buttons[index].classList.add('correct-answer');
+                feedback.className = 'mt-6 p-4 rounded-lg text-center bg-green-900/60 border-2 border-green-400';
+                feedback.innerHTML = `
+                    <div class="text-4xl mb-2">✨</div>
+                    <div class="text-xl font-bold text-green-300 mb-2">Correct!</div>
+                    <div class="text-sm text-green-100">${question.explanation}</div>
+                `;
+            } else {
+                if (index >= 0) {
+                    buttons[index].classList.add('wrong-answer');
+                }
+                buttons[question.correct].classList.add('correct-answer');
+                feedback.className = 'mt-6 p-4 rounded-lg text-center bg-red-900/60 border-2 border-red-400';
+                feedback.innerHTML = `
+                    <div class="text-4xl mb-2">💭</div>
+                    <div class="text-xl font-bold text-red-300 mb-2">Not quite!</div>
+                    <div class="text-sm text-red-100">${question.explanation}</div>
+                `;
+            }
+
+            feedback.classList.remove('hidden');
+            document.getElementById('quiz-next').classList.remove('hidden');
+            updateProgress();
+        }
+
+        function nextQuizQuestion() {
+            if (currentIndex < quizData.length - 1) {
+                currentIndex++;
+                loadQuizQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            clearInterval(quizTimer);
+            showScreen('results-screen');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('total-questions').textContent = quizData.length;
+            document.getElementById('percentage').textContent = percentage + '%';
+
+            celebrate();
+        }
+
+        // ==================== STUDY FUNCTIONS ====================
+        
+        function loadStudyContent() {
+            const section = studyData[currentIndex];
+            document.getElementById('study-number').textContent = currentIndex + 1;
+            
+            document.getElementById('study-content').innerHTML = `
+                <div class="text-center">
+                    <div class="text-6xl mb-6">${section.icon}</div>
+                    <h2 class="text-3xl font-bold text-amber-300 mb-6">${section.title}</h2>
+                    <div class="text-lg text-purple-100 leading-relaxed">
+                        ${section.content}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('prev-study').disabled = currentIndex === 0;
+            document.getElementById('next-study').disabled = currentIndex === studyData.length - 1;
+            
+            updateProgress();
+        }
+
+        function nextStudy() {
+            if (currentIndex < studyData.length - 1) {
+                currentIndex++;
+                loadStudyContent();
+                document.getElementById('study-content').scrollTop = 0;
+            }
+        }
+
+        function prevStudy() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadStudyContent();
+                document.getElementById('study-content').scrollTop = 0;
+            }
+        }
+
+        // ==================== INITIALIZATION ====================
+        
+        createParticles();
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (currentMode === 'flashcards') {
+                if (e.key === 'ArrowLeft') prevCard();
+                if (e.key === 'ArrowRight') nextCard();
+                if (e.key === ' ') { e.preventDefault(); flipCard(); }
+            } else if (currentMode === 'study') {
+                if (e.key === 'ArrowLeft') prevStudy();
+                if (e.key === 'ArrowRight') nextStudy();
+            }
+        });
+
+    </script>
+</body>
+</html>
