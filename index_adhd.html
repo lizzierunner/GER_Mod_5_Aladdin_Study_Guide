@@ -239,9 +239,95 @@
             z-index: 1000;
             animation: confetti-fall 3s linear;
         }
+
+        /* Magic Carpet Animation */
+        .magic-carpet {
+            position: fixed;
+            font-size: 80px;
+            opacity: 0.15;
+            z-index: 1;
+            animation: carpet-fly 25s linear infinite;
+        }
+        
+        @keyframes carpet-fly {
+            0% { 
+                transform: translateX(-150px) translateY(100vh) rotate(-15deg) scale(0.8); 
+                opacity: 0;
+            }
+            20% { opacity: 0.15; }
+            80% { opacity: 0.15; }
+            100% { 
+                transform: translateX(120vw) translateY(-20vh) rotate(15deg) scale(1.2); 
+                opacity: 0;
+            }
+        }
+
+        /* Genie Lamp Floating */
+        .floating-lamp {
+            position: fixed;
+            font-size: 60px;
+            animation: lamp-float 6s ease-in-out infinite;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        @keyframes lamp-float {
+            0%, 100% { transform: translateY(0px) rotate(-5deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        /* Stars Twinkling */
+        .star {
+            position: fixed;
+            color: #ffd700;
+            font-size: 20px;
+            animation: star-twinkle 3s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes star-twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Genie smoke trail on hover */
+        .genie-trail {
+            pointer-events: none;
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, transparent 70%);
+            animation: smoke-fade 1.5s ease-out forwards;
+            z-index: 5;
+        }
+
+        @keyframes smoke-fade {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(2) translateY(-50px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen">
+
+    <!-- Aladdin Background Elements -->
+    <div class="magic-carpet" style="bottom: 20%; left: -100px; animation-delay: 0s;">🧞‍♂️</div>
+    <div class="magic-carpet" style="top: 30%; right: -100px; animation-delay: 10s;">🕌</div>
+    
+    <div class="floating-lamp" style="top: 15%; left: 10%;">🪔</div>
+    <div class="floating-lamp" style="bottom: 20%; right: 15%; animation-delay: 2s;">🪔</div>
+    
+    <div class="star" style="top: 10%; left: 20%; animation-delay: 0s;">✨</div>
+    <div class="star" style="top: 25%; right: 25%; animation-delay: 1s;">⭐</div>
+    <div class="star" style="bottom: 15%; left: 30%; animation-delay: 2s;">✨</div>
+    <div class="star" style="top: 40%; left: 70%; animation-delay: 1.5s;">⭐</div>
+    <div class="star" style="bottom: 30%; right: 40%; animation-delay: 0.5s;">✨</div>
 
     <!-- Background Layer -->
     <div class="bg-layer fixed inset-0 z-0"></div>
@@ -273,7 +359,7 @@
                     <h2 class="text-3xl md:text-5xl font-bold text-amber-100 mb-4">Choose Your Path!</h2>
                     <p class="text-purple-200 mb-12 text-lg">How would you like to study?</p>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
                         <!-- Flashcards Mode -->
                         <button onclick="startMode('flashcards')" class="mode-btn p-8 bg-gradient-to-br from-purple-900 to-purple-700 rounded-2xl border-4 border-amber-400 shadow-[0_0_30px_rgba(251,191,36,0.4)] focus-ring">
                             <div class="text-6xl mb-4">🃏</div>
@@ -288,6 +374,14 @@
                             <h3 class="text-2xl font-bold text-yellow-300 mb-2">Quiz</h3>
                             <p class="text-orange-100 text-sm">Test your knowledge with multiple choice</p>
                             <div class="mt-4 text-xs text-yellow-200">⚡ Instant feedback!</div>
+                        </button>
+
+                        <!-- Essay Mode -->
+                        <button onclick="startMode('essay')" class="mode-btn p-8 bg-gradient-to-br from-pink-900 to-rose-800 rounded-2xl border-4 border-pink-400 shadow-[0_0_30px_rgba(236,72,153,0.4)] focus-ring">
+                            <div class="text-6xl mb-4">✍️</div>
+                            <h3 class="text-2xl font-bold text-pink-300 mb-2">Essay</h3>
+                            <p class="text-pink-100 text-sm">Practice essay questions with sample answers</p>
+                            <div class="mt-4 text-xs text-pink-200">📝 Deep learning!</div>
                         </button>
 
                         <!-- Study Mode -->
@@ -377,6 +471,66 @@
                         <div class="flex justify-center gap-4 mt-8">
                             <button id="quiz-next" onclick="nextQuizQuestion()" class="hidden px-8 py-3 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full border-2 border-yellow-400 text-white font-bold hover:scale-105 transition-all focus-ring">
                                 Next Question ➡️
+                            </button>
+                        </div>
+
+                        <button onclick="returnToMenu()" class="mt-8 mx-auto block px-6 py-2 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full transition-all focus-ring">
+                            🏠 Back to Menu
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Essay Screen -->
+                <div id="essay-screen" class="hidden">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="text-center mb-6">
+                            <span class="inline-block px-6 py-2 bg-pink-900/60 border-2 border-pink-400 rounded-full text-pink-300 text-sm font-bold">
+                                ✍️ Essay <span id="essay-number">1</span> of <span id="essay-total">0</span>
+                            </span>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-purple-900/60 to-pink-900/60 border-3 border-amber-400 rounded-2xl p-8 shadow-[0_0_40px_rgba(251,191,36,0.3)]">
+                            <div class="text-center mb-4">
+                                <div class="text-5xl mb-4">📜</div>
+                                <div class="text-amber-300 text-sm mb-4">🧞‍♂️ "The Genie says: Take your time and think deeply!" 🧞‍♂️</div>
+                            </div>
+
+                            <h3 id="essay-question" class="text-xl md:text-2xl text-amber-100 font-bold mb-6">
+                                Question appears here
+                            </h3>
+
+                            <div class="mb-6">
+                                <label class="block text-purple-200 mb-2 text-sm">✨ Your Answer:</label>
+                                <textarea id="essay-answer" rows="8" class="w-full p-4 bg-purple-900/30 border-2 border-purple-400 rounded-lg text-white placeholder-purple-300 focus:border-amber-400 focus:outline-none focus-ring custom-scroll" placeholder="Write your essay answer here... Think about the key concepts and examples!"></textarea>
+                                <div class="text-xs text-purple-300 mt-2">💡 Tip: Include specific examples and explain your reasoning!</div>
+                            </div>
+
+                            <div class="flex justify-center gap-4 mb-4">
+                                <button onclick="toggleSampleAnswer()" id="toggle-sample" class="px-6 py-3 bg-gradient-to-r from-teal-700 to-cyan-700 hover:from-teal-600 hover:to-cyan-600 rounded-full border-2 border-cyan-400 text-white font-bold transition-all focus-ring">
+                                    👁️ Show Sample Answer
+                                </button>
+                                <button onclick="clearEssayAnswer()" class="px-6 py-3 bg-gradient-to-r from-purple-700 to-pink-700 hover:from-purple-600 hover:to-pink-600 rounded-full border-2 border-purple-400 text-white font-bold transition-all focus-ring">
+                                    🗑️ Clear
+                                </button>
+                            </div>
+
+                            <div id="sample-answer" class="hidden mt-6 p-6 bg-gradient-to-br from-teal-900/60 to-blue-900/60 border-2 border-cyan-400 rounded-lg">
+                                <div class="flex items-center gap-2 mb-4">
+                                    <div class="text-3xl">🧞</div>
+                                    <h4 class="text-xl font-bold text-cyan-300">Sample Answer</h4>
+                                </div>
+                                <p id="sample-answer-text" class="text-white leading-relaxed">
+                                    Sample answer appears here
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center gap-4 mt-8">
+                            <button id="prev-essay" onclick="prevEssay()" class="px-8 py-3 bg-pink-800 hover:bg-pink-700 rounded-full border-2 border-pink-400 text-pink-100 font-bold disabled:opacity-30 disabled:cursor-not-allowed transition-all focus-ring">
+                                ⬅️ Previous
+                            </button>
+                            <button id="next-essay" onclick="nextEssay()" class="px-8 py-3 bg-rose-800 hover:bg-rose-700 rounded-full border-2 border-rose-400 text-rose-100 font-bold transition-all focus-ring">
+                                Next ➡️
                             </button>
                         </div>
 
@@ -582,6 +736,49 @@
             }
         ];
 
+        const essayData = [
+            {
+                question: "How does Bassnett's idea of intertextuality help explain Aladdin (2019) as more than just a remake of the animated film or the original tale?",
+                sampleAnswer: "Bassnett's idea of intertextuality shows that Aladdin (2019) exists inside a network of earlier versions, including the animated movie and older story traditions. The live-action film does not simply copy one source, but reworks familiar characters, scenes, and themes for a new audience. This makes the film part of an ongoing chain of connected stories rather than a single, direct adaptation. The 2019 version references multiple texts simultaneously - the 1992 animated film, the original Arabian Nights tales, and even Broadway musical adaptations - creating layers of meaning that audiences can appreciate on different levels."
+            },
+            {
+                question: "Using Bassnett's idea that texts gain new meaning in new cultural contexts, how does the 2019 version of Aladdin reflect modern values differently than earlier versions?",
+                sampleAnswer: "The 2019 film places much more emphasis on Jasmine's desire to lead and have political power. This reflects modern cultural conversations about gender and representation. According to Bassnett, stories change as they move across time and cultures, and Aladdin (2019) shows how the same story is reshaped to fit current social values rather than the priorities of earlier versions. For example, Jasmine's new song 'Speechless' directly addresses themes of female empowerment and speaking out against injustice, themes that resonate with contemporary #MeToo and feminist movements but would not have been emphasized in earlier versions of the story."
+            },
+            {
+                question: "Bassnett argues that readers and audiences play an important role in creating meaning. How does this apply to how audiences watch Aladdin (2019)?",
+                sampleAnswer: "Modern viewers bring expectations about diversity, fairness, and strong female characters to the film. These expectations shape how the story is understood and judged. Bassnett's argument helps explain that the meaning of Aladdin (2019) is created not only by the filmmakers, but also by how today's audiences interpret and respond to the story. For instance, audiences today notice and critique issues of representation and cultural authenticity in ways that earlier audiences might not have. The casting choices, costume design, and cultural consultants all respond to audience expectations for more accurate and respectful representation of Middle Eastern and South Asian cultures."
+            },
+            {
+                question: "How can Bassnett's concept of creative rewriting or 'homage' explain the relationship between Aladdin (2019) and earlier versions of the story?",
+                sampleAnswer: "Rather than being a faithful copy, the live-action film reuses recognizable moments and characters while changing tone, dialogue, and character motivations. Bassnett's idea of creative rewriting shows that adaptation often involves transforming earlier works to create something new. In this way, Aladdin (2019) functions more as a reinterpretation than a direct retelling. The film pays homage to iconic scenes like the magic carpet ride and 'A Whole New World,' but recontextualizes them with updated special effects and deeper character development. The Genie's character, while honoring Robin Williams' legacy, is transformed by Will Smith's performance to reflect contemporary cultural references and sensibilities."
+            },
+            {
+                question: "How do music and performance in Aladdin (2019) support Bassnett's idea that stories change when they move across genres and media?",
+                sampleAnswer: "The songs, choreography, and visual spectacle add emotional depth and shape how characters are understood, especially Jasmine and the Genie. Bassnett explains that when stories move across forms, such as from written or animated versions to live-action musical film, they gain new meanings. The musical format helps modern audiences connect to the story in ways that a purely written or older animated version cannot. The live-action format requires different choreography, cinematography, and vocal performances that create new meanings. For example, the physicality of live dancers and the real-world settings ground the fantasy elements in a way that changes how audiences experience the magic and wonder of the story."
+            },
+            {
+                question: "Why should Disney adaptations not be judged only by faithfulness to Grimm or original sources?",
+                sampleAnswer: "Intertextuality shows that adaptations exist within a network of texts shaped by modern culture, media form, and audiences. Meaning changes as stories move across time and formats. Disney adaptations are not simply translations but creative rewritings that respond to their specific cultural moments. Judging them solely on faithfulness ignores how stories naturally evolve and how different contexts require different approaches. Each adaptation speaks to its own audience's values, concerns, and expectations. Disney's changes often reflect shifts in societal values around family, morality, and entertainment that make the stories relevant and meaningful to contemporary viewers."
+            },
+            {
+                question: "Compare how Grimm and Disney handle justice and punishment in fairy tales. What does this reveal about changing cultural values?",
+                sampleAnswer: "Grimm fairy tales use violence and harsh punishment to enforce moral lessons, often including graphic details like cannibalism imagery in Snow White or the extreme suffering in Rapunzel. Disney versions soften violence and focus on hope, romance, and emotional growth to fit modern family audiences. This shift reveals changing cultural values around children's entertainment, psychological development, and moral education. Modern audiences prefer stories that emphasize emotional growth and redemption over physical punishment. This reflects broader societal changes in how we think about justice, rehabilitation versus retribution, and what messages we want to send to children about conflict resolution."
+            },
+            {
+                question: "How does The Lion King demonstrate the concept of intertextuality through its relationship with Shakespeare's Hamlet?",
+                sampleAnswer: "The Lion King draws on Hamlet's themes of identity, responsibility, and rightful succession, but transforms them into a new genre and medium for a family audience. It reworks Hamlet's core conflict - a prince dealing with his father's death and his uncle's treachery - into an animated musical with animals, African-inspired music, and a more hopeful resolution. This demonstrates intertextuality because the film doesn't just copy Shakespeare; it enters into a conversation with Hamlet, borrowing its structure while creating entirely new meanings appropriate for its medium and audience. The Lion King II further demonstrates this by drawing on Romeo and Juliet, showing how Disney engages with multiple classical sources to create networked meanings."
+            },
+            {
+                question: "How does Tangled transform the moral message of Rapunzel, and what does this reveal about modern storytelling values?",
+                sampleAnswer: "Tangled replaces physical punishment with emotional growth and empowerment, reflecting modern values and family-friendly storytelling. Where Grimm's Rapunzel includes pregnancy, exile, blindness, and prolonged suffering as consequences and plot points, Tangled focuses on Rapunzel's journey of self-discovery, her desire for freedom, and her development of agency and independence. This transformation reveals that modern storytelling values psychological development, personal empowerment, and hope over harsh moral lessons taught through suffering. The emphasis shifts from external punishment to internal growth, showing how contemporary culture prioritizes emotional intelligence and self-actualization. Tangled's Rapunzel is an active hero of her own story rather than a passive victim, reflecting modern feminist values."
+            },
+            {
+                question: "What role does music play in fairy tale adaptations, and how does it support the storytelling in films like Aladdin and Tangled?",
+                sampleAnswer: "Music supports emotional arcs, speeds storytelling, and fits fairy-tale fantasy while helping audiences understand characters quickly. In adaptations like Aladdin and Tangled, songs serve multiple purposes: they establish character motivations ('When Will My Life Begin' immediately shows us Rapunzel's yearning), advance the plot efficiently, create emotional connection with the audience, and add a layer of fantasy and wonder appropriate to the fairy tale genre. Musical numbers can compress complex emotions or long passages of time into a few minutes, making them ideal for family films with limited runtime. The music also creates memorable moments that become culturally significant, like 'A Whole New World,' allowing the adaptation to achieve its own cultural presence beyond the source material. This demonstrates how the musical format itself changes the meaning and impact of the story."
+            }
+        ];
+
         const studyData = [
             {
                 title: "🌟 Big Idea",
@@ -689,6 +886,10 @@
                 total = quizData.length;
                 current = currentIndex + 1;
                 text = `Question ${current} of ${total} • Score: ${score}/${total}`;
+            } else if (currentMode === 'essay') {
+                total = essayData.length;
+                current = currentIndex + 1;
+                text = `Essay ${current} of ${total}`;
             } else if (currentMode === 'study') {
                 total = studyData.length;
                 current = currentIndex + 1;
@@ -701,7 +902,7 @@
         }
 
         function showScreen(screenId) {
-            const screens = ['mode-selection', 'flashcard-screen', 'quiz-screen', 'study-screen', 'results-screen'];
+            const screens = ['mode-selection', 'flashcard-screen', 'quiz-screen', 'essay-screen', 'study-screen', 'results-screen'];
             screens.forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
@@ -739,6 +940,10 @@
                 showScreen('quiz-screen');
                 document.getElementById('quiz-total').textContent = quizData.length;
                 loadQuizQuestion();
+            } else if (mode === 'essay') {
+                document.getElementById('essay-total').textContent = essayData.length;
+                showScreen('essay-screen');
+                loadEssayQuestion();
             } else if (mode === 'study') {
                 document.getElementById('study-total').textContent = studyData.length;
                 showScreen('study-screen');
@@ -941,6 +1146,79 @@
             }
         }
 
+        // ==================== ESSAY FUNCTIONS ====================
+        
+        function loadEssayQuestion() {
+            const essay = essayData[currentIndex];
+            document.getElementById('essay-number').textContent = currentIndex + 1;
+            document.getElementById('essay-question').textContent = essay.question;
+            document.getElementById('sample-answer-text').textContent = essay.sampleAnswer;
+            document.getElementById('essay-answer').value = '';
+            document.getElementById('sample-answer').classList.add('hidden');
+            document.getElementById('toggle-sample').textContent = '👁️ Show Sample Answer';
+            
+            document.getElementById('prev-essay').disabled = currentIndex === 0;
+            document.getElementById('next-essay').disabled = currentIndex === essayData.length - 1;
+            
+            updateProgress();
+        }
+
+        function toggleSampleAnswer() {
+            const sampleDiv = document.getElementById('sample-answer');
+            const button = document.getElementById('toggle-sample');
+            
+            if (sampleDiv.classList.contains('hidden')) {
+                sampleDiv.classList.remove('hidden');
+                button.textContent = '🙈 Hide Sample Answer';
+            } else {
+                sampleDiv.classList.add('hidden');
+                button.textContent = '👁️ Show Sample Answer';
+            }
+        }
+
+        function clearEssayAnswer() {
+            document.getElementById('essay-answer').value = '';
+        }
+
+        function nextEssay() {
+            if (currentIndex < essayData.length - 1) {
+                currentIndex++;
+                loadEssayQuestion();
+            }
+        }
+
+        function prevEssay() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadEssayQuestion();
+            }
+        }
+
+        // ==================== GENIE SMOKE TRAIL ====================
+        
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+        let mouseMoving = false;
+
+        document.addEventListener('mousemove', (e) => {
+            const dx = e.clientX - lastMouseX;
+            const dy = e.clientY - lastMouseY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance > 20) { // Only create trail if mouse moved significantly
+                const trail = document.createElement('div');
+                trail.className = 'genie-trail';
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+                document.body.appendChild(trail);
+                
+                setTimeout(() => trail.remove(), 1500);
+                
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+            }
+        });
+
         // ==================== INITIALIZATION ====================
         
         createParticles();
@@ -951,6 +1229,9 @@
                 if (e.key === 'ArrowLeft') prevCard();
                 if (e.key === 'ArrowRight') nextCard();
                 if (e.key === ' ') { e.preventDefault(); flipCard(); }
+            } else if (currentMode === 'essay') {
+                if (e.key === 'ArrowLeft' && !document.getElementById('essay-answer').matches(':focus')) prevEssay();
+                if (e.key === 'ArrowRight' && !document.getElementById('essay-answer').matches(':focus')) nextEssay();
             } else if (currentMode === 'study') {
                 if (e.key === 'ArrowLeft') prevStudy();
                 if (e.key === 'ArrowRight') nextStudy();
