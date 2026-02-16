@@ -187,6 +187,78 @@
             outline-offset: 4px;
         }
 
+        /* Progress Bar Animations */
+        @keyframes fillProgress {
+            from { width: 0%; }
+            to { width: var(--progress-width); }
+        }
+
+        .progress-bar-fill {
+            animation: fillProgress 0.5s ease-out forwards;
+        }
+
+        /* Streak Fire Animation */
+        @keyframes fire {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+            50% { transform: translateY(-5px) scale(1.2); opacity: 0.8; }
+        }
+
+        .fire-icon {
+            animation: fire 0.5s ease-in-out infinite;
+        }
+
+        /* Achievement Pop */
+        @keyframes achievementPop {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .achievement-badge {
+            animation: achievementPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Difficulty Colors */
+        .difficulty-easy { border-left: 4px solid #10b981; }
+        .difficulty-medium { border-left: 4px solid #f59e0b; }
+        .difficulty-hard { border-left: 4px solid #ef4444; }
+
+        /* Pomodoro Timer Styles */
+        .timer-circle {
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            transition: stroke-dashoffset 1s linear;
+        }
+
+        /* Celebration Burst */
+        @keyframes burst {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        .burst {
+            animation: burst 0.6s ease-out;
+        }
+
+        /* Sound Wave Animation */
+        @keyframes soundWave {
+            0%, 100% { height: 5px; }
+            50% { height: 20px; }
+        }
+
+        .sound-wave {
+            display: inline-block;
+            width: 3px;
+            height: 10px;
+            background: #fbbf24;
+            margin: 0 2px;
+            animation: soundWave 0.6s ease-in-out infinite;
+        }
+
+        .sound-wave:nth-child(2) { animation-delay: 0.1s; }
+        .sound-wave:nth-child(3) { animation-delay: 0.2s; }
+        .sound-wave:nth-child(4) { animation-delay: 0.3s; }
+
         /* Coin Animation */
         .coin {
             position: absolute;
@@ -346,6 +418,47 @@
                     <div id="progress" class="progress-fill" style="width: 0%"></div>
                 </div>
                 <p id="progress-text" class="text-center text-amber-300 mt-2 text-sm">Let's begin your adventure!</p>
+                
+                <!-- Gamification Stats Panel -->
+                <div class="mt-6 max-w-4xl mx-auto">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <!-- XP Points -->
+                        <div class="bg-gradient-to-br from-amber-900/60 to-orange-900/60 rounded-lg p-3 border-2 border-amber-400/50 text-center transform hover:scale-105 transition-all">
+                            <div class="text-2xl mb-1">⭐</div>
+                            <div id="xp-display" class="text-xl font-bold text-amber-300">0 XP</div>
+                            <div class="text-xs text-amber-200/70">Total Points</div>
+                        </div>
+                        
+                        <!-- Streak -->
+                        <div class="bg-gradient-to-br from-red-900/60 to-orange-900/60 rounded-lg p-3 border-2 border-orange-400/50 text-center transform hover:scale-105 transition-all">
+                            <div class="text-2xl mb-1"><span id="streak-fire" class="fire-icon">🔥</span></div>
+                            <div id="streak-display" class="text-xl font-bold text-orange-300">0 Day</div>
+                            <div class="text-xs text-orange-200/70">Study Streak</div>
+                        </div>
+                        
+                        <!-- Cards Mastered -->
+                        <div class="bg-gradient-to-br from-green-900/60 to-emerald-900/60 rounded-lg p-3 border-2 border-green-400/50 text-center transform hover:scale-105 transition-all">
+                            <div class="text-2xl mb-1">📚</div>
+                            <div id="cards-mastered" class="text-xl font-bold text-green-300">0/20</div>
+                            <div class="text-xs text-green-200/70">Cards Mastered</div>
+                        </div>
+                        
+                        <!-- Achievements -->
+                        <div class="bg-gradient-to-br from-purple-900/60 to-blue-900/60 rounded-lg p-3 border-2 border-purple-400/50 text-center transform hover:scale-105 transition-all cursor-pointer" onclick="showAchievements()">
+                            <div class="text-2xl mb-1">🏆</div>
+                            <div id="achievements-display" class="text-xl font-bold text-purple-300">0/10</div>
+                            <div class="text-xs text-purple-200/70">Achievements</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Tips Bar -->
+                    <div id="tip-bar" class="mt-4 bg-gradient-to-r from-teal-900/60 to-blue-900/60 border-2 border-teal-400/50 rounded-lg p-3 text-center">
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="text-xl">💡</span>
+                            <span id="current-tip" class="text-sm text-teal-200"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -940,6 +1053,224 @@
         let selectedAnswer = null;
         let currentFlashcards = [...flashcardsData];
 
+        // ==================== GAMIFICATION STATE ====================
+        
+        let userStats = {
+            xp: 0,
+            streak: 0,
+            lastVisit: null,
+            cardsMastered: [],
+            achievements: [],
+            totalCardsFlipped: 0,
+            totalQuizzesTaken: 0,
+            perfectScores: 0,
+            studyMinutes: 0
+        };
+
+        const achievements = [
+            { id: 'first_flip', name: 'First Flip', icon: '🎴', desc: 'Flip your first flashcard', xp: 10 },
+            { id: 'quiz_master', name: 'Quiz Master', icon: '🎓', desc: 'Complete your first quiz', xp: 25 },
+            { id: 'perfect_score', name: 'Perfect!', icon: '💯', desc: 'Get 100% on a quiz', xp: 50 },
+            { id: 'speed_demon', name: 'Speed Demon', icon: '⚡', desc: 'Answer 5 questions in under 10s each', xp: 30 },
+            { id: 'essay_writer', name: 'Essay Writer', icon: '✍️', desc: 'Complete 3 essay questions', xp: 40 },
+            { id: 'dedicated', name: 'Dedicated', icon: '🔥', desc: 'Maintain a 3-day streak', xp: 50 },
+            { id: 'scholar', name: 'Scholar', icon: '📚', desc: 'Master all flashcards', xp: 100 },
+            { id: 'night_owl', name: 'Night Owl', icon: '🦉', desc: 'Study after 10 PM', xp: 20 },
+            { id: 'early_bird', name: 'Early Bird', icon: '🐦', desc: 'Study before 7 AM', xp: 20 },
+            { id: 'legend', name: 'Legend', icon: '👑', desc: 'Earn 500 XP', xp: 0 }
+        ];
+
+        const tips = [
+            "Use arrow keys to navigate quickly! ⌨️",
+            "Take breaks every 25 minutes (Pomodoro technique) 🍅",
+            "Flip cards multiple times to reinforce learning 🔄",
+            "Quiz yourself regularly to test retention 📝",
+            "Connect concepts to real examples you know 🔗",
+            "Teach the material to someone else 👥",
+            "Use mnemonic devices for key terms 🧠",
+            "Study in short, focused bursts for ADHD-friendly learning ⚡",
+            "Write your own essay answers before checking samples ✍️",
+            "Review difficult cards more frequently 📚"
+        ];
+
+        // ==================== LOAD/SAVE FUNCTIONS ====================
+        
+        function loadUserStats() {
+            const saved = localStorage.getItem('aladdin_study_stats');
+            if (saved) {
+                userStats = JSON.parse(saved);
+                updateStatsDisplay();
+                checkStreak();
+            }
+            rotateTip();
+        }
+
+        function saveUserStats() {
+            localStorage.setItem('aladdin_study_stats', JSON.stringify(userStats));
+            updateStatsDisplay();
+        }
+
+        function checkStreak() {
+            const today = new Date().toDateString();
+            if (userStats.lastVisit) {
+                const lastVisit = new Date(userStats.lastVisit).toDateString();
+                const yesterday = new Date(Date.now() - 86400000).toDateString();
+                
+                if (lastVisit === yesterday) {
+                    userStats.streak++;
+                    if (userStats.streak === 3) unlockAchievement('dedicated');
+                } else if (lastVisit !== today) {
+                    userStats.streak = 1;
+                }
+            } else {
+                userStats.streak = 1;
+            }
+            userStats.lastVisit = Date.now();
+            
+            // Check time-based achievements
+            const hour = new Date().getHours();
+            if (hour >= 22 || hour <= 2) unlockAchievement('night_owl');
+            if (hour >= 5 && hour < 7) unlockAchievement('early_bird');
+            
+            saveUserStats();
+        }
+
+        function addXP(amount, message = '') {
+            userStats.xp += amount;
+            if (userStats.xp >= 500) unlockAchievement('legend');
+            
+            // Show XP popup
+            showXPPopup(amount, message);
+            saveUserStats();
+        }
+
+        function showXPPopup(amount, message) {
+            const popup = document.createElement('div');
+            popup.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 z-50 achievement-badge';
+            popup.innerHTML = `
+                <div class="bg-gradient-to-r from-amber-600 to-orange-600 text-white px-6 py-3 rounded-full border-2 border-yellow-300 shadow-2xl">
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">⭐</span>
+                        <div>
+                            <div class="font-bold">+${amount} XP</div>
+                            ${message ? `<div class="text-xs opacity-90">${message}</div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(popup);
+            setTimeout(() => popup.remove(), 2000);
+        }
+
+        function unlockAchievement(achievementId) {
+            if (userStats.achievements.includes(achievementId)) return;
+            
+            const achievement = achievements.find(a => a.id === achievementId);
+            if (!achievement) return;
+            
+            userStats.achievements.push(achievementId);
+            addXP(achievement.xp, achievement.name);
+            
+            // Show achievement popup
+            const popup = document.createElement('div');
+            popup.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50';
+            popup.innerHTML = `
+                <div class="achievement-badge bg-gradient-to-br from-purple-900 to-blue-900 border-4 border-amber-400 rounded-2xl p-8 text-center shadow-2xl max-w-sm">
+                    <div class="text-6xl mb-4">${achievement.icon}</div>
+                    <div class="text-3xl font-bold text-amber-300 mb-2">Achievement Unlocked!</div>
+                    <div class="text-xl text-purple-200 mb-2">${achievement.name}</div>
+                    <div class="text-sm text-purple-300">${achievement.desc}</div>
+                    <div class="mt-4 text-amber-400 font-bold">+${achievement.xp} XP</div>
+                </div>
+            `;
+            document.body.appendChild(popup);
+            setTimeout(() => popup.remove(), 4000);
+            
+            playSound('achievement');
+            saveUserStats();
+        }
+
+        function updateStatsDisplay() {
+            document.getElementById('xp-display').textContent = `${userStats.xp} XP`;
+            document.getElementById('streak-display').textContent = `${userStats.streak} Day${userStats.streak !== 1 ? 's' : ''}`;
+            document.getElementById('cards-mastered').textContent = `${userStats.cardsMastered.length}/20`;
+            document.getElementById('achievements-display').textContent = `${userStats.achievements.length}/10`;
+        }
+
+        function showAchievements() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="bg-gradient-to-br from-purple-900 to-blue-900 border-4 border-amber-400 rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                    <h2 class="text-3xl font-bold text-amber-300 mb-6 text-center">🏆 Achievements</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${achievements.map(a => {
+                            const unlocked = userStats.achievements.includes(a.id);
+                            return `
+                                <div class="bg-gradient-to-br ${unlocked ? 'from-amber-900/60 to-orange-900/60 border-amber-400' : 'from-gray-800/60 to-gray-900/60 border-gray-600'} border-2 rounded-lg p-4 text-center">
+                                    <div class="text-4xl mb-2 ${unlocked ? '' : 'opacity-30'}">${a.icon}</div>
+                                    <div class="font-bold ${unlocked ? 'text-amber-300' : 'text-gray-400'}">${a.name}</div>
+                                    <div class="text-xs ${unlocked ? 'text-purple-200' : 'text-gray-500'} mt-1">${a.desc}</div>
+                                    <div class="text-sm mt-2 ${unlocked ? 'text-green-400' : 'text-gray-500'}">
+                                        ${unlocked ? '✓ Unlocked' : `🔒 ${a.xp} XP`}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    <button onclick="this.closest('.fixed').remove()" class="mt-6 w-full px-6 py-3 bg-gradient-to-r from-orange-600 to-red-600 rounded-full border-2 border-yellow-400 text-white font-bold hover:scale-105 transition-all">
+                        Close
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+        }
+
+        function rotateTip() {
+            const tipEl = document.getElementById('current-tip');
+            if (tipEl) {
+                tipEl.textContent = tips[Math.floor(Math.random() * tips.length)];
+            }
+        }
+
+        // Rotate tips every 10 seconds
+        setInterval(rotateTip, 10000);
+
+        // ==================== SOUND EFFECTS ====================
+        
+        function playSound(type) {
+            // Using Web Audio API for simple beeps
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            switch(type) {
+                case 'flip':
+                    oscillator.frequency.value = 400;
+                    gainNode.gain.value = 0.1;
+                    break;
+                case 'correct':
+                    oscillator.frequency.value = 600;
+                    gainNode.gain.value = 0.15;
+                    break;
+                case 'wrong':
+                    oscillator.frequency.value = 200;
+                    gainNode.gain.value = 0.1;
+                    break;
+                case 'achievement':
+                    oscillator.frequency.value = 800;
+                    gainNode.gain.value = 0.2;
+                    break;
+            }
+            
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+
         // ==================== HELPER FUNCTIONS ====================
         
         function createParticles() {
@@ -1065,13 +1396,26 @@
         }
 
         function flipCard() {
-            document.getElementById('flashcard').classList.toggle('flipped');
+            const card = document.getElementById('flashcard');
+            const wasFlipped = card.classList.contains('flipped');
+            card.classList.toggle('flipped');
+            
+            // Gamification: Track first flip
+            if (!wasFlipped) {
+                userStats.totalCardsFlipped++;
+                if (userStats.totalCardsFlipped === 1) {
+                    unlockAchievement('first_flip');
+                }
+                playSound('flip');
+                addXP(2, 'Card flipped!');
+            }
         }
 
         function nextCard() {
             if (currentIndex < currentFlashcards.length - 1) {
                 currentIndex++;
                 loadFlashcard();
+                addXP(1);
             }
         }
 
@@ -1086,6 +1430,7 @@
             currentFlashcards.sort(() => Math.random() - 0.5);
             currentIndex = 0;
             loadFlashcard();
+            addXP(5, 'Cards shuffled!');
         }
 
         // ==================== QUIZ FUNCTIONS ====================
@@ -1154,6 +1499,14 @@
                     <div class="text-xl font-bold text-green-300 mb-2">Correct!</div>
                     <div class="text-sm text-green-100">${question.explanation}</div>
                 `;
+                
+                // Gamification: Award XP for correct answer
+                const xpGained = timeLeft > 20 ? 15 : timeLeft > 10 ? 10 : 5;
+                addXP(xpGained, 'Correct answer!');
+                playSound('correct');
+                
+                // Confetti animation
+                createConfetti();
             } else {
                 if (index >= 0) {
                     buttons[index].classList.add('wrong-answer');
@@ -1165,11 +1518,24 @@
                     <div class="text-xl font-bold text-red-300 mb-2">Not quite!</div>
                     <div class="text-sm text-red-100">${question.explanation}</div>
                 `;
+                playSound('wrong');
             }
 
             feedback.classList.remove('hidden');
             document.getElementById('quiz-next').classList.remove('hidden');
             updateProgress();
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                confetti.style.background = ['#fbbf24', '#f59e0b', '#ef4444', '#10b981', '#3b82f6'][i % 5];
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
         }
 
         function nextQuizQuestion() {
@@ -1189,6 +1555,24 @@
             document.getElementById('final-score').textContent = score;
             document.getElementById('total-questions').textContent = quizData.length;
             document.getElementById('percentage').textContent = percentage + '%';
+
+            // Gamification: Track quiz completion
+            userStats.totalQuizzesTaken++;
+            if (userStats.totalQuizzesTaken === 1) {
+                unlockAchievement('quiz_master');
+            }
+            
+            if (percentage === 100) {
+                userStats.perfectScores++;
+                unlockAchievement('perfect_score');
+                addXP(50, 'Perfect score!');
+            } else if (percentage >= 80) {
+                addXP(30, 'Great job!');
+            } else if (percentage >= 60) {
+                addXP(20, 'Good effort!');
+            } else {
+                addXP(10, 'Keep practicing!');
+            }
 
             celebrate();
         }
@@ -1307,6 +1691,7 @@
         // ==================== INITIALIZATION ====================
         
         createParticles();
+        loadUserStats(); // Load user stats from localStorage
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
