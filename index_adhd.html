@@ -506,6 +506,79 @@
                         </button>
                     </div>
 
+                    <!-- Blast Games Section -->
+                    <div class="mt-10">
+                        <h3 class="text-2xl font-bold text-amber-300 mb-6">🎮 Blast Games — Bite-Sized Brain Bursts!</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+                            
+                            <button onclick="startMode('match')" class="mode-btn p-6 bg-gradient-to-br from-emerald-900 to-green-700 rounded-2xl border-4 border-emerald-400 shadow-[0_0_25px_rgba(16,185,129,0.4)] focus-ring text-left">
+                                <div class="flex items-center gap-4">
+                                    <div class="text-5xl">🧩</div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-emerald-300">Term Matcher</h3>
+                                        <p class="text-emerald-100 text-xs mt-1">Drag terms to their definitions — beat the clock!</p>
+                                        <div class="mt-2 text-xs text-emerald-200">⏱️ 60 seconds</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button onclick="startMode('whack')" class="mode-btn p-6 bg-gradient-to-br from-violet-900 to-fuchsia-700 rounded-2xl border-4 border-fuchsia-400 shadow-[0_0_25px_rgba(192,38,211,0.4)] focus-ring text-left">
+                                <div class="flex items-center gap-4">
+                                    <div class="text-5xl">🧞</div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-fuchsia-300">Genie Whack!</h3>
+                                        <p class="text-fuchsia-100 text-xs mt-1">Tap the correct answer before it vanishes!</p>
+                                        <div class="mt-2 text-xs text-fuchsia-200">⚡ Speed round</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button onclick="startMode('fill')" class="mode-btn p-6 bg-gradient-to-br from-sky-900 to-indigo-700 rounded-2xl border-4 border-sky-400 shadow-[0_0_25px_rgba(56,189,248,0.4)] focus-ring text-left">
+                                <div class="flex items-center gap-4">
+                                    <div class="text-5xl">📝</div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-sky-300">Fill the Blank</h3>
+                                        <p class="text-sky-100 text-xs mt-1">Complete key sentences from the cram sheet!</p>
+                                        <div class="mt-2 text-xs text-sky-200">🧠 Recall practice</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button onclick="startMode('sort')" class="mode-btn p-6 bg-gradient-to-br from-amber-900 to-yellow-700 rounded-2xl border-4 border-amber-400 shadow-[0_0_25px_rgba(245,158,11,0.4)] focus-ring text-left">
+                                <div class="flex items-center gap-4">
+                                    <div class="text-5xl">⚖️</div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-amber-300">Grimm or Disney?</h3>
+                                        <p class="text-amber-100 text-xs mt-1">Sort traits into the correct category!</p>
+                                        <div class="mt-2 text-xs text-amber-200">🏰 Classification game</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button onclick="startMode('namedrop')" class="mode-btn p-6 bg-gradient-to-br from-rose-900 to-red-700 rounded-2xl border-4 border-rose-400 shadow-[0_0_25px_rgba(244,63,94,0.4)] focus-ring text-left">
+                                <div class="flex items-center gap-4">
+                                    <div class="text-5xl">💬</div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-rose-300">Name Drop</h3>
+                                        <p class="text-rose-100 text-xs mt-1">Match scholars to their key ideas!</p>
+                                        <div class="mt-2 text-xs text-rose-200">🎓 Exam name-drops</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button onclick="startMode('rescue')" class="mode-btn p-6 bg-gradient-to-br from-cyan-900 to-teal-700 rounded-2xl border-4 border-cyan-400 shadow-[0_0_25px_rgba(6,182,212,0.4)] focus-ring text-left">
+                                <div class="flex items-center gap-4">
+                                    <div class="text-5xl">🪔</div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-cyan-300">Lamp Rescue</h3>
+                                        <p class="text-cyan-100 text-xs mt-1">Answer fast to free the Genie — 3 strikes you're out!</p>
+                                        <div class="mt-2 text-xs text-cyan-200">❤️ Survival mode</div>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="mt-12 text-amber-300 italic">
                         "Do you trust me?" - Aladdin 🪔
                     </div>
@@ -680,6 +753,137 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- Results Screen -->
+                <div id="results-screen" class="hidden text-center">
+
+                <!-- ========== BLAST GAME SCREENS ========== -->
+
+                <!-- Term Matcher Game -->
+                <div id="match-screen" class="hidden">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-2xl font-bold text-emerald-300">🧩 Term Matcher</span>
+                            <span class="px-4 py-2 bg-emerald-900/60 border-2 border-emerald-400 rounded-full text-emerald-300 font-bold">
+                                ⏱️ <span id="match-timer">60</span>s | ✅ <span id="match-score">0</span>/<span id="match-total">6</span>
+                            </span>
+                        </div>
+                        <p class="text-emerald-200 text-sm mb-6">Tap a term, then tap its definition to match!</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div id="match-terms" class="space-y-3"></div>
+                            <div id="match-defs" class="space-y-3"></div>
+                        </div>
+                        <div id="match-result" class="hidden mt-6 p-6 rounded-2xl text-center"></div>
+                        <button onclick="returnToMenu()" class="mt-6 mx-auto block px-6 py-2 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full transition-all focus-ring">🏠 Back to Menu</button>
+                    </div>
+                </div>
+
+                <!-- Genie Whack Game -->
+                <div id="whack-screen" class="hidden">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-2xl font-bold text-fuchsia-300">🧞 Genie Whack!</span>
+                            <span class="px-4 py-2 bg-fuchsia-900/60 border-2 border-fuchsia-400 rounded-full text-fuchsia-300 font-bold">
+                                ⭐ <span id="whack-score">0</span> | Round <span id="whack-round">1</span>/10
+                            </span>
+                        </div>
+                        <div id="whack-question" class="text-center text-xl font-bold text-white mb-6 p-4 bg-purple-900/60 border-2 border-purple-400 rounded-xl"></div>
+                        <div id="whack-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+                        <div id="whack-result" class="hidden mt-6 p-6 rounded-2xl text-center"></div>
+                        <button onclick="returnToMenu()" class="mt-6 mx-auto block px-6 py-2 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full transition-all focus-ring">🏠 Back to Menu</button>
+                    </div>
+                </div>
+
+                <!-- Fill the Blank Game -->
+                <div id="fill-screen" class="hidden">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-2xl font-bold text-sky-300">📝 Fill the Blank</span>
+                            <span class="px-4 py-2 bg-sky-900/60 border-2 border-sky-400 rounded-full text-sky-300 font-bold">
+                                ✅ <span id="fill-score">0</span> | Q<span id="fill-round">1</span>/<span id="fill-total">8</span>
+                            </span>
+                        </div>
+                        <div id="fill-sentence" class="text-lg text-white mb-6 p-6 bg-indigo-900/60 border-2 border-indigo-400 rounded-xl leading-relaxed"></div>
+                        <div id="fill-options" class="grid grid-cols-2 gap-3 mb-4"></div>
+                        <div id="fill-feedback" class="hidden mt-4 p-4 rounded-xl text-center"></div>
+                        <button id="fill-next" class="hidden mt-4 mx-auto block px-8 py-3 bg-gradient-to-r from-sky-600 to-indigo-600 rounded-full border-2 border-sky-400 text-white font-bold hover:scale-105 transition-all" onclick="nextFill()">Next →</button>
+                        <div id="fill-result" class="hidden mt-6 p-6 rounded-2xl text-center"></div>
+                        <button onclick="returnToMenu()" class="mt-6 mx-auto block px-6 py-2 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full transition-all focus-ring">🏠 Back to Menu</button>
+                    </div>
+                </div>
+
+                <!-- Grimm or Disney Sort Game -->
+                <div id="sort-screen" class="hidden">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-2xl font-bold text-amber-300">⚖️ Grimm or Disney?</span>
+                            <span class="px-4 py-2 bg-amber-900/60 border-2 border-amber-400 rounded-full text-amber-300 font-bold">
+                                ✅ <span id="sort-score">0</span> | <span id="sort-round">1</span>/<span id="sort-total">10</span>
+                            </span>
+                        </div>
+                        <div id="sort-trait" class="text-center text-xl font-bold text-white mb-8 p-6 bg-purple-900/60 border-2 border-purple-400 rounded-xl"></div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <button id="sort-grimm" onclick="sortAnswer('grimm')" class="p-8 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl border-4 border-gray-400 hover:border-red-400 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all text-center">
+                                <div class="text-5xl mb-3">📖</div>
+                                <div class="text-2xl font-bold text-gray-200">Grimm</div>
+                                <div class="text-xs text-gray-400 mt-2">Dark & brutal</div>
+                            </button>
+                            <button id="sort-disney" onclick="sortAnswer('disney')" class="p-8 bg-gradient-to-br from-blue-800 to-purple-900 rounded-2xl border-4 border-blue-400 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all text-center">
+                                <div class="text-5xl mb-3">🏰</div>
+                                <div class="text-2xl font-bold text-blue-200">Disney</div>
+                                <div class="text-xs text-blue-400 mt-2">Softened & hopeful</div>
+                            </button>
+                        </div>
+                        <div id="sort-feedback" class="hidden mt-4 p-4 rounded-xl text-center"></div>
+                        <div id="sort-result" class="hidden mt-6 p-6 rounded-2xl text-center"></div>
+                        <button onclick="returnToMenu()" class="mt-6 mx-auto block px-6 py-2 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full transition-all focus-ring">🏠 Back to Menu</button>
+                    </div>
+                </div>
+
+                <!-- Name Drop Game -->
+                <div id="namedrop-screen" class="hidden">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-2xl font-bold text-rose-300">💬 Name Drop</span>
+                            <span class="px-4 py-2 bg-rose-900/60 border-2 border-rose-400 rounded-full text-rose-300 font-bold">
+                                ✅ <span id="nd-score">0</span> | <span id="nd-round">1</span>/<span id="nd-total">8</span>
+                            </span>
+                        </div>
+                        <div id="nd-idea" class="text-center text-lg font-bold text-white mb-6 p-6 bg-rose-900/40 border-2 border-rose-400 rounded-xl"></div>
+                        <p class="text-rose-200 text-sm mb-4 text-center">Who said it / is associated with this idea?</p>
+                        <div id="nd-options" class="grid grid-cols-2 gap-3"></div>
+                        <div id="nd-feedback" class="hidden mt-4 p-4 rounded-xl text-center"></div>
+                        <button id="nd-next" class="hidden mt-4 mx-auto block px-8 py-3 bg-gradient-to-r from-rose-600 to-red-600 rounded-full border-2 border-rose-400 text-white font-bold hover:scale-105 transition-all" onclick="nextNameDrop()">Next →</button>
+                        <div id="nd-result" class="hidden mt-6 p-6 rounded-2xl text-center"></div>
+                        <button onclick="returnToMenu()" class="mt-6 mx-auto block px-6 py-2 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full transition-all focus-ring">🏠 Back to Menu</button>
+                    </div>
+                </div>
+
+                <!-- Lamp Rescue Game -->
+                <div id="rescue-screen" class="hidden">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-2xl font-bold text-cyan-300">🪔 Lamp Rescue</span>
+                            <span class="px-4 py-2 bg-cyan-900/60 border-2 border-cyan-400 rounded-full text-cyan-300 font-bold">
+                                ❤️ <span id="rescue-lives">❤️❤️❤️</span> | ⭐ <span id="rescue-score">0</span>
+                            </span>
+                        </div>
+                        <div class="text-center mb-4">
+                            <div id="rescue-genie" class="text-7xl transition-all duration-300">🪔</div>
+                            <div id="rescue-progress" class="mt-2 text-sm text-cyan-200"></div>
+                        </div>
+                        <div id="rescue-question" class="text-center text-lg font-bold text-white mb-6 p-4 bg-teal-900/60 border-2 border-teal-400 rounded-xl"></div>
+                        <div id="rescue-timer-bar" class="w-full h-3 bg-gray-700 rounded-full mb-4 overflow-hidden">
+                            <div id="rescue-timer-fill" class="h-full bg-gradient-to-r from-cyan-400 to-teal-400 rounded-full transition-all duration-100"></div>
+                        </div>
+                        <div id="rescue-options" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                        <div id="rescue-feedback" class="hidden mt-4 p-4 rounded-xl text-center"></div>
+                        <div id="rescue-result" class="hidden mt-6 p-6 rounded-2xl text-center"></div>
+                        <button onclick="returnToMenu()" class="mt-6 mx-auto block px-6 py-2 border-2 border-amber-400 text-amber-300 hover:bg-amber-900/50 rounded-full transition-all focus-ring">🏠 Back to Menu</button>
+                    </div>
+                </div>
+
+                </div> <!-- end rescue-screen -->
 
                 <!-- Results Screen -->
                 <div id="results-screen" class="hidden text-center">
@@ -1043,6 +1247,88 @@
             }
         ];
 
+        // ==================== BLAST GAME DATA ====================
+
+        const matchData = [
+            { term: "Influence", def: "Old model — proves direct cause from one author to another" },
+            { term: "Intertextuality", def: "Texts exist in a web of connections that shape meaning" },
+            { term: "Translation", def: "Reshapes meaning across languages and cultures" },
+            { term: "Reader role", def: "Audiences actively create meaning through context" },
+            { term: "Creative rewriting", def: "Reworking earlier material in new ways, not copying" },
+            { term: "Energy field", def: "Literature as dynamic, interconnected relationships" },
+            { term: "Homage", def: "Boundaries blur between imitation, translation, borrowing" },
+            { term: "Core thesis", def: "Literature is a network of intertextual relationships" }
+        ];
+
+        const sortData = [
+            { trait: "Brutality as moral enforcement", answer: "grimm" },
+            { trait: "Unforgettable, graphic justice", answer: "grimm" },
+            { trait: "Softened violence", answer: "disney" },
+            { trait: "Emotional growth focus", answer: "disney" },
+            { trait: "Hope and family-friendly tone", answer: "disney" },
+            { trait: "Cannibalism imagery (Snow White)", answer: "grimm" },
+            { trait: "Implied moral resolution", answer: "disney" },
+            { trait: "Pregnancy, exile, blindness (Rapunzel)", answer: "grimm" },
+            { trait: "Identity and empowerment themes", answer: "disney" },
+            { trait: "Brutal punishment for villains", answer: "grimm" },
+            { trait: "Jasmine's political leadership", answer: "disney" },
+            { trait: "Hamlet reworked as family musical", answer: "disney" },
+            { trait: "Long suffering as moral lesson", answer: "grimm" },
+            { trait: "Romance and magical adventure", answer: "disney" }
+        ];
+
+        const nameDropData = [
+            { idea: "Literature cannot be understood in isolation", answer: "Matthew Arnold", options: ["Matthew Arnold", "Ezra Pound", "Seamus Heaney", "Walt Disney"] },
+            { idea: "Intertextual reference to Dante's Purgatorio — adds layers of grief and hope", answer: "Seamus Heaney", options: ["Seamus Heaney", "Matthew Arnold", "Brothers Grimm", "Bassnett"] },
+            { idea: "'Energy field' metaphor — literature becomes dynamic when connections are seen", answer: "Bassnett", options: ["Bassnett", "Ezra Pound", "Seamus Heaney", "Matthew Arnold"] },
+            { idea: "'Homage' — boundaries blur between translation, imitation, and borrowing", answer: "Ezra Pound", options: ["Ezra Pound", "Matthew Arnold", "Brothers Grimm", "Bassnett"] },
+            { idea: "Collected folk tales with brutality as moral enforcement", answer: "Brothers Grimm", options: ["Brothers Grimm", "Walt Disney", "Bassnett", "Seamus Heaney"] },
+            { idea: "Softened fairy tales for family audiences with hope and emotional growth", answer: "Walt Disney", options: ["Walt Disney", "Brothers Grimm", "Ezra Pound", "Matthew Arnold"] },
+            { idea: "Literature is a dynamic network of intertextual relationships, not direct influence", answer: "Bassnett", options: ["Bassnett", "Seamus Heaney", "Walt Disney", "Ezra Pound"] },
+            { idea: "Translation is crucial — ideas move across cultures and gain new meaning", answer: "Bassnett", options: ["Bassnett", "Brothers Grimm", "Matthew Arnold", "Seamus Heaney"] }
+        ];
+
+        const fillData = [
+            { sentence: "Literature should be understood as a dynamic network of _____ relationships.", blank: "intertextual", options: ["intertextual", "personal", "fictional", "traditional"] },
+            { sentence: "Bassnett critiques the older model of direct _____ between authors.", blank: "influence", options: ["influence", "conflict", "friendship", "competition"] },
+            { sentence: "Grimm fairy tales use _____ as moral enforcement.", blank: "brutality", options: ["brutality", "comedy", "music", "translation"] },
+            { sentence: "Disney focuses on emotional _____ rather than harsh punishment.", blank: "growth", options: ["growth", "detachment", "confusion", "violence"] },
+            { sentence: "Heaney's reference to Dante adds layers of grief and _____.", blank: "hope", options: ["hope", "anger", "fear", "comedy"] },
+            { sentence: "Ezra Pound shows that _____ becomes unstable as texts transform earlier works.", blank: "originality", options: ["originality", "grammar", "punctuation", "spelling"] },
+            { sentence: "Tangled removes physical punishment and focuses on identity and _____.", blank: "empowerment", options: ["empowerment", "revenge", "isolation", "punishment"] },
+            { sentence: "Aladdin (2019) emphasizes Jasmine's _____ and modern representation.", blank: "leadership", options: ["leadership", "silence", "obedience", "beauty"] },
+            { sentence: "Meaning shifts because _____ and culture shift over time.", blank: "audience", options: ["audience", "weather", "technology", "geography"] },
+            { sentence: "The Lion King is _____ reworked for a family musical format.", blank: "Hamlet", options: ["Hamlet", "Macbeth", "Othello", "Romeo and Juliet"] }
+        ];
+
+        const whackData = [
+            { q: "What does intertextuality mean?", correct: "Texts in a web of connections", wrong: ["Authors copy each other", "Books are expensive", "Stories never change", "Reading is hard"] },
+            { q: "What did Grimm use for moral enforcement?", correct: "Brutality", wrong: ["Jokes", "Music", "Kind words", "Magic tricks"] },
+            { q: "What does Disney focus on instead of punishment?", correct: "Emotional growth & hope", wrong: ["More violence", "Longer movies", "Fewer characters", "Black and white film"] },
+            { q: "What is Bassnett's 'energy field'?", correct: "Dynamic literary connections", wrong: ["Electricity in books", "Movie special effects", "Solar power", "Author's writing speed"] },
+            { q: "Lion King reworks which Shakespeare play?", correct: "Hamlet", wrong: ["Romeo and Juliet", "Macbeth", "The Tempest", "A Midsummer Night's Dream"] },
+            { q: "What does Aladdin (2019) emphasize?", correct: "Jasmine's leadership", wrong: ["More magic", "Longer songs", "Jafar's backstory", "Genie's sadness"] },
+            { q: "What is Pound's concept of 'homage'?", correct: "Blurred boundaries of borrowing", wrong: ["Perfect copies", "Stealing ideas", "Avoiding references", "Writing alone"] },
+            { q: "What's wrong with traditional influence studies?", correct: "Too limiting and simplified", wrong: ["Too expensive", "Too modern", "Too accurate", "Too detailed"] },
+            { q: "Tangled focuses on identity and...?", correct: "Empowerment", wrong: ["Revenge", "Violence", "Isolation", "Sadness"] },
+            { q: "If you freeze on the exam, write about...?", correct: "Adaptations gain new meaning across time/culture/medium", wrong: ["Disney is the best", "Grimm was wrong", "Shakespeare invented stories", "Movies replace books"] }
+        ];
+
+        const rescueData = [
+            { q: "Bassnett's core thesis: literature is a _____ of intertextual relationships", a: "Dynamic network", wrong: ["Simple chain", "Dead end", "Single story"] },
+            { q: "Snow White: Disney removes what from Grimm?", a: "Cannibalism & brutal punishment", wrong: ["The mirror", "The prince", "The dwarfs"] },
+            { q: "What metaphor does Bassnett use for connected literature?", a: "Energy field", wrong: ["Brick wall", "Closed book", "Locked door"] },
+            { q: "Translation allows ideas to move across...?", a: "Cultures and time", wrong: ["Only English", "Only Europe", "Only Disney"] },
+            { q: "Readers help create meaning through their...?", a: "Expectations & experiences", wrong: ["Age only", "Height", "Favorite color"] },
+            { q: "Why is Aladdin (2019) different from the 1992 version?", a: "Modern representation & Jasmine's leadership", wrong: ["Better graphics only", "Shorter runtime", "No music"] },
+            { q: "Heaney + Dante shows intertextuality adds layers of...?", a: "Grief and hope", wrong: ["Comedy and satire", "Action and drama", "Science and math"] },
+            { q: "What approach does Bassnett critique?", a: "Direct influence studies", wrong: ["Intertextuality", "Translation", "Reader response"] },
+            { q: "Grimm: brutality serves what purpose?", a: "Moral enforcement & unforgettable justice", wrong: ["Entertainment", "Comedy", "Romance"] },
+            { q: "Disney adaptations should NOT be judged only by...?", a: "Faithfulness to Grimm", wrong: ["Box office", "Animation quality", "Song count"] },
+            { q: "The emergency freeze sentence starts with: 'Adaptations gain new...'", a: "Meaning as they move across time, culture, and medium", wrong: ["Power over other stories", "Money from audiences", "Popularity every decade"] },
+            { q: "Lion King II draws on which Shakespeare play?", a: "Romeo and Juliet", wrong: ["Hamlet", "Othello", "King Lear"] }
+        ];
+
         // ==================== STATE ====================
         
         let currentMode = 'menu';
@@ -1318,9 +1604,10 @@
         }
 
         function showScreen(screenId) {
-            const screens = ['mode-selection', 'flashcard-screen', 'quiz-screen', 'essay-screen', 'study-screen', 'results-screen'];
+            const screens = ['mode-selection', 'flashcard-screen', 'quiz-screen', 'essay-screen', 'study-screen', 'results-screen', 'match-screen', 'whack-screen', 'fill-screen', 'sort-screen', 'namedrop-screen', 'rescue-screen'];
             screens.forEach(id => {
-                document.getElementById(id).classList.add('hidden');
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden');
             });
             document.getElementById(screenId).classList.remove('hidden');
         }
@@ -1364,6 +1651,18 @@
                 document.getElementById('study-total').textContent = studyData.length;
                 showScreen('study-screen');
                 loadStudyContent();
+            } else if (mode === 'match') {
+                initMatchGame();
+            } else if (mode === 'whack') {
+                initWhackGame();
+            } else if (mode === 'fill') {
+                initFillGame();
+            } else if (mode === 'sort') {
+                initSortGame();
+            } else if (mode === 'namedrop') {
+                initNameDropGame();
+            } else if (mode === 'rescue') {
+                initRescueGame();
             }
 
             updateProgress();
@@ -1378,6 +1677,9 @@
                 clearInterval(quizTimer);
                 quizTimer = null;
             }
+            if (window.gameTimer) { clearInterval(window.gameTimer); window.gameTimer = null; }
+            if (window.whackTimeout) { clearTimeout(window.whackTimeout); }
+            if (window.rescueTimer) { clearInterval(window.rescueTimer); }
         }
 
         // ==================== FLASHCARD FUNCTIONS ====================
@@ -1707,6 +2009,553 @@
                 if (e.key === 'ArrowRight') nextStudy();
             }
         });
+
+        // ==================== 🧩 TERM MATCHER GAME ====================
+
+        function initMatchGame() {
+            showScreen('match-screen');
+            window.matchScore = 0;
+            window.matchSelected = null;
+            window.matchTotal = 6;
+            window.matchTime = 60;
+            document.getElementById('match-score').textContent = '0';
+            document.getElementById('match-total').textContent = window.matchTotal;
+            document.getElementById('match-result').classList.add('hidden');
+
+            const shuffled = [...matchData].sort(() => Math.random() - 0.5).slice(0, 6);
+            const terms = shuffled.map((d, i) => ({ text: d.term, id: i, type: 'term' })).sort(() => Math.random() - 0.5);
+            const defs = shuffled.map((d, i) => ({ text: d.def, id: i, type: 'def' })).sort(() => Math.random() - 0.5);
+            window.matchPairs = shuffled;
+
+            const termsDiv = document.getElementById('match-terms');
+            const defsDiv = document.getElementById('match-defs');
+            termsDiv.innerHTML = '';
+            defsDiv.innerHTML = '';
+
+            terms.forEach(t => {
+                const btn = document.createElement('button');
+                btn.className = 'match-btn p-3 bg-emerald-900/60 border-2 border-emerald-400/50 rounded-lg text-emerald-200 text-sm font-bold hover:bg-emerald-800/80 transition-all text-left';
+                btn.textContent = t.text;
+                btn.dataset.id = t.id;
+                btn.dataset.type = 'term';
+                btn.onclick = () => matchSelect(btn);
+                termsDiv.appendChild(btn);
+            });
+
+            defs.forEach(d => {
+                const btn = document.createElement('button');
+                btn.className = 'match-btn p-3 bg-purple-900/60 border-2 border-purple-400/50 rounded-lg text-purple-200 text-sm hover:bg-purple-800/80 transition-all text-left';
+                btn.textContent = d.text;
+                btn.dataset.id = d.id;
+                btn.dataset.type = 'def';
+                btn.onclick = () => matchSelect(btn);
+                defsDiv.appendChild(btn);
+            });
+
+            document.getElementById('match-timer').textContent = window.matchTime;
+            window.gameTimer = setInterval(() => {
+                window.matchTime--;
+                document.getElementById('match-timer').textContent = window.matchTime;
+                if (window.matchTime <= 10) {
+                    document.getElementById('match-timer').parentElement.classList.add('timer-warning');
+                }
+                if (window.matchTime <= 0) {
+                    clearInterval(window.gameTimer);
+                    endMatchGame();
+                }
+            }, 1000);
+        }
+
+        function matchSelect(btn) {
+            if (btn.classList.contains('opacity-30')) return;
+
+            if (!window.matchSelected) {
+                window.matchSelected = btn;
+                btn.classList.add('ring-4', 'ring-amber-400', 'scale-105');
+            } else {
+                if (window.matchSelected.dataset.type === btn.dataset.type) {
+                    window.matchSelected.classList.remove('ring-4', 'ring-amber-400', 'scale-105');
+                    window.matchSelected = btn;
+                    btn.classList.add('ring-4', 'ring-amber-400', 'scale-105');
+                    return;
+                }
+
+                if (window.matchSelected.dataset.id === btn.dataset.id) {
+                    window.matchScore++;
+                    document.getElementById('match-score').textContent = window.matchScore;
+                    window.matchSelected.classList.remove('ring-4', 'ring-amber-400', 'scale-105');
+                    window.matchSelected.classList.add('opacity-30', 'bg-green-900/60', 'border-green-400');
+                    btn.classList.add('opacity-30', 'bg-green-900/60', 'border-green-400');
+                    window.matchSelected.onclick = null;
+                    btn.onclick = null;
+                    playSound('correct');
+                    addXP(5, 'Matched!');
+
+                    if (window.matchScore >= window.matchTotal) {
+                        clearInterval(window.gameTimer);
+                        setTimeout(endMatchGame, 500);
+                    }
+                } else {
+                    window.matchSelected.classList.remove('ring-4', 'ring-amber-400', 'scale-105');
+                    window.matchSelected.classList.add('border-red-500');
+                    btn.classList.add('border-red-500');
+                    playSound('wrong');
+                    setTimeout(() => {
+                        window.matchSelected.classList.remove('border-red-500');
+                        btn.classList.remove('border-red-500');
+                        window.matchSelected = null;
+                    }, 600);
+                    return;
+                }
+                window.matchSelected = null;
+            }
+        }
+
+        function endMatchGame() {
+            clearInterval(window.gameTimer);
+            const result = document.getElementById('match-result');
+            const pct = Math.round((window.matchScore / window.matchTotal) * 100);
+            const timeUsed = 60 - window.matchTime;
+            result.className = 'mt-6 p-6 rounded-2xl text-center ' + (pct === 100 ? 'bg-green-900/60 border-2 border-green-400' : 'bg-amber-900/60 border-2 border-amber-400');
+            result.innerHTML = `
+                <div class="text-5xl mb-3">${pct === 100 ? '🎉' : '⏰'}</div>
+                <div class="text-2xl font-bold ${pct === 100 ? 'text-green-300' : 'text-amber-300'} mb-2">${pct === 100 ? 'Perfect Match!' : 'Time\'s Up!'}</div>
+                <div class="text-lg text-white">${window.matchScore}/${window.matchTotal} matched ${pct === 100 ? 'in ' + timeUsed + 's!' : ''}</div>
+                <button onclick="initMatchGame()" class="mt-4 px-6 py-2 bg-emerald-600 rounded-full text-white font-bold hover:scale-105 transition-all">🔄 Play Again</button>
+            `;
+            result.classList.remove('hidden');
+            if (pct === 100) { addXP(25, 'Perfect match!'); celebrate(); }
+            else addXP(10, 'Good effort!');
+        }
+
+        // ==================== 🧞 GENIE WHACK GAME ====================
+
+        function initWhackGame() {
+            showScreen('whack-screen');
+            window.whackScore = 0;
+            window.whackRound = 0;
+            window.whackTotal = 10;
+            window.shuffledWhack = [...whackData].sort(() => Math.random() - 0.5).slice(0, 10);
+            document.getElementById('whack-score').textContent = '0';
+            document.getElementById('whack-result').classList.add('hidden');
+            nextWhackRound();
+        }
+
+        function nextWhackRound() {
+            if (window.whackRound >= window.whackTotal) { endWhackGame(); return; }
+
+            const data = window.shuffledWhack[window.whackRound];
+            window.whackRound++;
+            document.getElementById('whack-round').textContent = window.whackRound;
+            document.getElementById('whack-question').textContent = data.q;
+
+            const grid = document.getElementById('whack-grid');
+            grid.innerHTML = '';
+
+            const wrongOptions = data.wrong.sort(() => Math.random() - 0.5).slice(0, 3);
+            const allOptions = [data.correct, ...wrongOptions].sort(() => Math.random() - 0.5);
+
+            allOptions.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                const isCorrect = opt === data.correct;
+                btn.className = 'whack-option p-4 bg-gradient-to-br from-violet-800/80 to-fuchsia-800/80 border-2 border-fuchsia-400/50 rounded-xl text-white font-bold hover:scale-110 hover:border-amber-400 transition-all text-sm';
+                btn.innerHTML = `<div class="text-3xl mb-2">${['🧞', '🪔', '🏺', '✨'][i]}</div>${opt}`;
+                btn.style.animation = `float ${1 + Math.random()}s ease-in-out infinite`;
+                btn.style.animationDelay = (i * 0.2) + 's';
+                btn.onclick = () => whackAnswer(btn, isCorrect);
+                grid.appendChild(btn);
+            });
+
+            // Auto-advance if not answered in 5 seconds
+            if (window.whackTimeout) clearTimeout(window.whackTimeout);
+            window.whackTimeout = setTimeout(() => {
+                const opts = grid.querySelectorAll('.whack-option:not(.opacity-50)');
+                if (opts.length > 0) {
+                    playSound('wrong');
+                    grid.innerHTML = '<div class="col-span-3 text-center text-xl text-red-300 p-4">⏰ Too slow! The answer was: <span class="text-amber-300 font-bold">' + data.correct + '</span></div>';
+                    setTimeout(nextWhackRound, 1500);
+                }
+            }, 5000);
+        }
+
+        function whackAnswer(btn, isCorrect) {
+            if (window.whackTimeout) clearTimeout(window.whackTimeout);
+            const grid = document.getElementById('whack-grid');
+            const allBtns = grid.querySelectorAll('.whack-option');
+            allBtns.forEach(b => { b.onclick = null; b.classList.add('opacity-50'); });
+
+            if (isCorrect) {
+                window.whackScore++;
+                document.getElementById('whack-score').textContent = window.whackScore;
+                btn.classList.remove('opacity-50');
+                btn.classList.add('border-green-400', 'bg-green-900/80', 'scale-110');
+                playSound('correct');
+                addXP(5);
+            } else {
+                btn.classList.add('border-red-500', 'bg-red-900/80');
+                playSound('wrong');
+            }
+
+            setTimeout(nextWhackRound, 1200);
+        }
+
+        function endWhackGame() {
+            const result = document.getElementById('whack-result');
+            const pct = Math.round((window.whackScore / window.whackTotal) * 100);
+            result.className = 'mt-6 p-6 rounded-2xl text-center ' + (pct >= 80 ? 'bg-green-900/60 border-2 border-green-400' : 'bg-fuchsia-900/60 border-2 border-fuchsia-400');
+            result.innerHTML = `
+                <div class="text-5xl mb-3">${pct >= 80 ? '🧞‍♂️' : '🪔'}</div>
+                <div class="text-2xl font-bold ${pct >= 80 ? 'text-green-300' : 'text-fuchsia-300'} mb-2">${pct >= 80 ? 'Genie Freed!' : 'Almost There!'}</div>
+                <div class="text-lg text-white">${window.whackScore}/${window.whackTotal} correct — ${pct}%</div>
+                <button onclick="initWhackGame()" class="mt-4 px-6 py-2 bg-fuchsia-600 rounded-full text-white font-bold hover:scale-105 transition-all">🔄 Play Again</button>
+            `;
+            result.classList.remove('hidden');
+            if (pct >= 80) { addXP(30, 'Genie freed!'); celebrate(); } else addXP(10);
+        }
+
+        // ==================== 📝 FILL THE BLANK GAME ====================
+
+        function initFillGame() {
+            showScreen('fill-screen');
+            window.fillScore = 0;
+            window.fillRound = 0;
+            window.shuffledFill = [...fillData].sort(() => Math.random() - 0.5);
+            window.fillTotal = window.shuffledFill.length;
+            document.getElementById('fill-score').textContent = '0';
+            document.getElementById('fill-total').textContent = window.fillTotal;
+            document.getElementById('fill-result').classList.add('hidden');
+            nextFill();
+        }
+
+        function nextFill() {
+            if (window.fillRound >= window.fillTotal) { endFillGame(); return; }
+
+            const data = window.shuffledFill[window.fillRound];
+            window.fillRound++;
+            document.getElementById('fill-round').textContent = window.fillRound;
+            document.getElementById('fill-sentence').innerHTML = data.sentence.replace('_____', '<span class="px-4 py-1 bg-amber-400/30 border-b-2 border-amber-400 text-amber-300 font-bold">_____</span>');
+            document.getElementById('fill-feedback').classList.add('hidden');
+            document.getElementById('fill-next').classList.add('hidden');
+
+            const opts = document.getElementById('fill-options');
+            opts.innerHTML = '';
+            const shuffledOpts = [...data.options].sort(() => Math.random() - 0.5);
+
+            shuffledOpts.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'p-3 bg-sky-900/60 border-2 border-sky-400/50 rounded-lg text-sky-200 font-bold hover:bg-sky-800/80 hover:scale-105 transition-all';
+                btn.textContent = opt;
+                btn.onclick = () => fillAnswer(opt, data.blank, btn);
+                opts.appendChild(btn);
+            });
+        }
+
+        function fillAnswer(chosen, correct, btn) {
+            const opts = document.getElementById('fill-options');
+            const allBtns = opts.querySelectorAll('button');
+            allBtns.forEach(b => b.onclick = null);
+
+            const fb = document.getElementById('fill-feedback');
+            if (chosen === correct) {
+                window.fillScore++;
+                document.getElementById('fill-score').textContent = window.fillScore;
+                btn.classList.add('bg-green-900/80', 'border-green-400');
+                fb.className = 'mt-4 p-4 rounded-xl text-center bg-green-900/60 border-2 border-green-400';
+                fb.innerHTML = '<span class="text-2xl">✨</span> <span class="text-green-300 font-bold">Correct!</span>';
+                document.getElementById('fill-sentence').innerHTML = document.getElementById('fill-sentence').innerHTML.replace('_____', `<span class="text-green-300 font-bold">${correct}</span>`);
+                playSound('correct');
+                addXP(5);
+            } else {
+                btn.classList.add('bg-red-900/80', 'border-red-500');
+                allBtns.forEach(b => { if (b.textContent === correct) b.classList.add('bg-green-900/80', 'border-green-400'); });
+                fb.className = 'mt-4 p-4 rounded-xl text-center bg-red-900/60 border-2 border-red-400';
+                fb.innerHTML = `<span class="text-2xl">💭</span> <span class="text-red-300">The answer was: <span class="font-bold text-green-300">${correct}</span></span>`;
+                playSound('wrong');
+            }
+            fb.classList.remove('hidden');
+            document.getElementById('fill-next').classList.remove('hidden');
+        }
+
+        function endFillGame() {
+            const result = document.getElementById('fill-result');
+            const pct = Math.round((window.fillScore / window.fillTotal) * 100);
+            result.className = 'mt-6 p-6 rounded-2xl text-center ' + (pct >= 80 ? 'bg-green-900/60 border-2 border-green-400' : 'bg-sky-900/60 border-2 border-sky-400');
+            result.innerHTML = `
+                <div class="text-5xl mb-3">${pct >= 80 ? '📝✨' : '📝'}</div>
+                <div class="text-2xl font-bold ${pct >= 80 ? 'text-green-300' : 'text-sky-300'} mb-2">${pct >= 80 ? 'Master Scribe!' : 'Keep Practicing!'}</div>
+                <div class="text-lg text-white">${window.fillScore}/${window.fillTotal} — ${pct}%</div>
+                <button onclick="initFillGame()" class="mt-4 px-6 py-2 bg-sky-600 rounded-full text-white font-bold hover:scale-105 transition-all">🔄 Play Again</button>
+            `;
+            result.classList.remove('hidden');
+            document.getElementById('fill-next').classList.add('hidden');
+            if (pct >= 80) { addXP(25, 'Master scribe!'); celebrate(); } else addXP(10);
+        }
+
+        // ==================== ⚖️ GRIMM OR DISNEY SORT ====================
+
+        function initSortGame() {
+            showScreen('sort-screen');
+            window.sortScore = 0;
+            window.sortRound = 0;
+            window.shuffledSort = [...sortData].sort(() => Math.random() - 0.5).slice(0, 10);
+            window.sortTotal = window.shuffledSort.length;
+            document.getElementById('sort-score').textContent = '0';
+            document.getElementById('sort-total').textContent = window.sortTotal;
+            document.getElementById('sort-result').classList.add('hidden');
+            document.getElementById('sort-feedback').classList.add('hidden');
+            loadSortTrait();
+        }
+
+        function loadSortTrait() {
+            if (window.sortRound >= window.sortTotal) { endSortGame(); return; }
+            const data = window.shuffledSort[window.sortRound];
+            document.getElementById('sort-round').textContent = window.sortRound + 1;
+            document.getElementById('sort-trait').textContent = '❓ ' + data.trait;
+            document.getElementById('sort-feedback').classList.add('hidden');
+            document.getElementById('sort-grimm').disabled = false;
+            document.getElementById('sort-disney').disabled = false;
+        }
+
+        function sortAnswer(choice) {
+            const data = window.shuffledSort[window.sortRound];
+            const fb = document.getElementById('sort-feedback');
+            document.getElementById('sort-grimm').disabled = true;
+            document.getElementById('sort-disney').disabled = true;
+
+            if (choice === data.answer) {
+                window.sortScore++;
+                document.getElementById('sort-score').textContent = window.sortScore;
+                fb.className = 'mt-4 p-4 rounded-xl text-center bg-green-900/60 border-2 border-green-400';
+                fb.innerHTML = `<span class="text-2xl">✅</span> <span class="text-green-300 font-bold">Correct! That's ${data.answer === 'grimm' ? 'Grimm 📖' : 'Disney 🏰'}!</span>`;
+                playSound('correct');
+                addXP(5);
+            } else {
+                fb.className = 'mt-4 p-4 rounded-xl text-center bg-red-900/60 border-2 border-red-400';
+                fb.innerHTML = `<span class="text-2xl">❌</span> <span class="text-red-300">That's actually <span class="font-bold text-amber-300">${data.answer === 'grimm' ? 'Grimm 📖' : 'Disney 🏰'}</span></span>`;
+                playSound('wrong');
+            }
+            fb.classList.remove('hidden');
+
+            window.sortRound++;
+            setTimeout(loadSortTrait, 1300);
+        }
+
+        function endSortGame() {
+            const result = document.getElementById('sort-result');
+            const pct = Math.round((window.sortScore / window.sortTotal) * 100);
+            result.className = 'mt-6 p-6 rounded-2xl text-center ' + (pct >= 80 ? 'bg-green-900/60 border-2 border-green-400' : 'bg-amber-900/60 border-2 border-amber-400');
+            result.innerHTML = `
+                <div class="text-5xl mb-3">${pct >= 80 ? '⚖️✨' : '⚖️'}</div>
+                <div class="text-2xl font-bold ${pct >= 80 ? 'text-green-300' : 'text-amber-300'} mb-2">${pct >= 80 ? 'Fairy Tale Expert!' : 'Study More!'}</div>
+                <div class="text-lg text-white">${window.sortScore}/${window.sortTotal} — ${pct}%</div>
+                <button onclick="initSortGame()" class="mt-4 px-6 py-2 bg-amber-600 rounded-full text-white font-bold hover:scale-105 transition-all">🔄 Play Again</button>
+            `;
+            result.classList.remove('hidden');
+            if (pct >= 80) { addXP(25, 'Fairy tale expert!'); celebrate(); } else addXP(10);
+        }
+
+        // ==================== 💬 NAME DROP GAME ====================
+
+        function initNameDropGame() {
+            showScreen('namedrop-screen');
+            window.ndScore = 0;
+            window.ndRound = 0;
+            window.shuffledND = [...nameDropData].sort(() => Math.random() - 0.5);
+            window.ndTotal = window.shuffledND.length;
+            document.getElementById('nd-score').textContent = '0';
+            document.getElementById('nd-total').textContent = window.ndTotal;
+            document.getElementById('nd-result').classList.add('hidden');
+            nextNameDrop();
+        }
+
+        function nextNameDrop() {
+            if (window.ndRound >= window.ndTotal) { endNameDropGame(); return; }
+
+            const data = window.shuffledND[window.ndRound];
+            window.ndRound++;
+            document.getElementById('nd-round').textContent = window.ndRound;
+            document.getElementById('nd-idea').innerHTML = `"${data.idea}"`;
+            document.getElementById('nd-feedback').classList.add('hidden');
+            document.getElementById('nd-next').classList.add('hidden');
+
+            const opts = document.getElementById('nd-options');
+            opts.innerHTML = '';
+            const shuffledOpts = [...data.options].sort(() => Math.random() - 0.5);
+
+            shuffledOpts.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'p-4 bg-rose-900/60 border-2 border-rose-400/50 rounded-xl text-white font-bold hover:bg-rose-800/80 hover:scale-105 transition-all text-center';
+                btn.innerHTML = `<div class="text-2xl mb-1">🎓</div>${opt}`;
+                btn.onclick = () => ndAnswer(opt, data.answer, btn);
+                opts.appendChild(btn);
+            });
+        }
+
+        function ndAnswer(chosen, correct, btn) {
+            const opts = document.getElementById('nd-options');
+            const allBtns = opts.querySelectorAll('button');
+            allBtns.forEach(b => b.onclick = null);
+
+            const fb = document.getElementById('nd-feedback');
+            if (chosen === correct) {
+                window.ndScore++;
+                document.getElementById('nd-score').textContent = window.ndScore;
+                btn.classList.add('bg-green-900/80', 'border-green-400');
+                fb.className = 'mt-4 p-4 rounded-xl text-center bg-green-900/60 border-2 border-green-400';
+                fb.innerHTML = `<span class="text-2xl">✨</span> <span class="text-green-300 font-bold">Correct! ${correct}!</span>`;
+                playSound('correct');
+                addXP(5, 'Name dropped!');
+            } else {
+                btn.classList.add('bg-red-900/80', 'border-red-500');
+                allBtns.forEach(b => { if (b.textContent.includes(correct)) b.classList.add('bg-green-900/80', 'border-green-400'); });
+                fb.className = 'mt-4 p-4 rounded-xl text-center bg-red-900/60 border-2 border-red-400';
+                fb.innerHTML = `<span class="text-2xl">💭</span> <span class="text-red-300">That was <span class="font-bold text-amber-300">${correct}</span></span>`;
+                playSound('wrong');
+            }
+            fb.classList.remove('hidden');
+            document.getElementById('nd-next').classList.remove('hidden');
+        }
+
+        function endNameDropGame() {
+            const result = document.getElementById('nd-result');
+            const pct = Math.round((window.ndScore / window.ndTotal) * 100);
+            result.className = 'mt-6 p-6 rounded-2xl text-center ' + (pct >= 80 ? 'bg-green-900/60 border-2 border-green-400' : 'bg-rose-900/60 border-2 border-rose-400');
+            result.innerHTML = `
+                <div class="text-5xl mb-3">${pct >= 80 ? '🎓✨' : '💬'}</div>
+                <div class="text-2xl font-bold ${pct >= 80 ? 'text-green-300' : 'text-rose-300'} mb-2">${pct >= 80 ? 'Scholar Supreme!' : 'Keep Studying!'}</div>
+                <div class="text-lg text-white">${window.ndScore}/${window.ndTotal} — ${pct}%</div>
+                <button onclick="initNameDropGame()" class="mt-4 px-6 py-2 bg-rose-600 rounded-full text-white font-bold hover:scale-105 transition-all">🔄 Play Again</button>
+            `;
+            result.classList.remove('hidden');
+            document.getElementById('nd-next').classList.add('hidden');
+            if (pct >= 80) { addXP(25, 'Scholar supreme!'); celebrate(); } else addXP(10);
+        }
+
+        // ==================== 🪔 LAMP RESCUE (SURVIVAL) ====================
+
+        function initRescueGame() {
+            showScreen('rescue-screen');
+            window.rescueLives = 3;
+            window.rescueScore = 0;
+            window.rescueRound = 0;
+            window.shuffledRescue = [...rescueData].sort(() => Math.random() - 0.5);
+            window.rescueTimeLeft = 100;
+            document.getElementById('rescue-lives').textContent = '❤️❤️❤️';
+            document.getElementById('rescue-score').textContent = '0';
+            document.getElementById('rescue-genie').textContent = '🪔';
+            document.getElementById('rescue-progress').textContent = 'Free the Genie! Answer correctly!';
+            document.getElementById('rescue-result').classList.add('hidden');
+            nextRescueRound();
+        }
+
+        function nextRescueRound() {
+            if (window.rescueLives <= 0 || window.rescueRound >= window.shuffledRescue.length) {
+                endRescueGame();
+                return;
+            }
+
+            const data = window.shuffledRescue[window.rescueRound];
+            window.rescueRound++;
+            window.rescueTimeLeft = 100;
+
+            document.getElementById('rescue-question').textContent = data.q;
+            document.getElementById('rescue-feedback').classList.add('hidden');
+            document.getElementById('rescue-timer-fill').style.width = '100%';
+
+            const opts = document.getElementById('rescue-options');
+            opts.innerHTML = '';
+            const allOpts = [data.a, ...data.wrong].sort(() => Math.random() - 0.5);
+
+            allOpts.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'p-3 bg-cyan-900/60 border-2 border-cyan-400/50 rounded-lg text-white font-bold hover:bg-cyan-800/80 hover:scale-105 transition-all text-sm';
+                btn.textContent = opt;
+                btn.onclick = () => rescueAnswer(opt, data.a, btn);
+                opts.appendChild(btn);
+            });
+
+            // Timer countdown
+            if (window.rescueTimer) clearInterval(window.rescueTimer);
+            window.rescueTimer = setInterval(() => {
+                window.rescueTimeLeft -= 2;
+                document.getElementById('rescue-timer-fill').style.width = window.rescueTimeLeft + '%';
+
+                if (window.rescueTimeLeft <= 30) {
+                    document.getElementById('rescue-timer-fill').classList.add('from-red-500', 'to-orange-500');
+                    document.getElementById('rescue-timer-fill').classList.remove('from-cyan-400', 'to-teal-400');
+                }
+
+                if (window.rescueTimeLeft <= 0) {
+                    clearInterval(window.rescueTimer);
+                    window.rescueLives--;
+                    updateRescueLives();
+                    playSound('wrong');
+                    const fb = document.getElementById('rescue-feedback');
+                    fb.className = 'mt-4 p-4 rounded-xl text-center bg-red-900/60 border-2 border-red-400';
+                    fb.innerHTML = `<span class="text-2xl">⏰</span> <span class="text-red-300">Time's up! The answer was: <span class="font-bold text-amber-300">${data.a}</span></span>`;
+                    fb.classList.remove('hidden');
+                    setTimeout(nextRescueRound, 1500);
+                }
+            }, 100);
+        }
+
+        function rescueAnswer(chosen, correct, btn) {
+            clearInterval(window.rescueTimer);
+            const opts = document.getElementById('rescue-options');
+            opts.querySelectorAll('button').forEach(b => b.onclick = null);
+
+            const fb = document.getElementById('rescue-feedback');
+            if (chosen === correct) {
+                window.rescueScore++;
+                document.getElementById('rescue-score').textContent = window.rescueScore;
+                btn.classList.add('bg-green-900/80', 'border-green-400');
+                fb.className = 'mt-4 p-4 rounded-xl text-center bg-green-900/60 border-2 border-green-400';
+                fb.innerHTML = `<span class="text-2xl">✨</span> <span class="text-green-300 font-bold">Correct! The lamp glows brighter!</span>`;
+                playSound('correct');
+                addXP(8, 'Lamp rescued!');
+
+                // Update genie progress
+                const progress = Math.min(window.rescueScore / 8, 1);
+                const genieStages = ['🪔', '🪔✨', '💨', '💨✨', '🌀', '🌀✨', '🧞', '🧞‍♂️'];
+                document.getElementById('rescue-genie').textContent = genieStages[Math.min(window.rescueScore, genieStages.length - 1)];
+                document.getElementById('rescue-progress').textContent = window.rescueScore >= 8 ? '🧞‍♂️ THE GENIE IS FREE!' : `${Math.round(progress * 100)}% freed...`;
+            } else {
+                window.rescueLives--;
+                updateRescueLives();
+                btn.classList.add('bg-red-900/80', 'border-red-500');
+                fb.className = 'mt-4 p-4 rounded-xl text-center bg-red-900/60 border-2 border-red-400';
+                fb.innerHTML = `<span class="text-2xl">💔</span> <span class="text-red-300">The answer was: <span class="font-bold text-amber-300">${correct}</span></span>`;
+                playSound('wrong');
+                document.getElementById('rescue-genie').style.transform = 'scale(0.9)';
+                setTimeout(() => { document.getElementById('rescue-genie').style.transform = 'scale(1)'; }, 300);
+            }
+            fb.classList.remove('hidden');
+            document.getElementById('rescue-timer-fill').style.width = '0%';
+            document.getElementById('rescue-timer-fill').classList.remove('from-red-500', 'to-orange-500');
+            document.getElementById('rescue-timer-fill').classList.add('from-cyan-400', 'to-teal-400');
+            setTimeout(nextRescueRound, 1500);
+        }
+
+        function updateRescueLives() {
+            const hearts = '❤️'.repeat(window.rescueLives) + '🖤'.repeat(3 - window.rescueLives);
+            document.getElementById('rescue-lives').textContent = hearts;
+        }
+
+        function endRescueGame() {
+            clearInterval(window.rescueTimer);
+            const result = document.getElementById('rescue-result');
+            const freed = window.rescueScore >= 8;
+            result.className = 'mt-6 p-6 rounded-2xl text-center ' + (freed ? 'bg-green-900/60 border-2 border-green-400' : 'bg-cyan-900/60 border-2 border-cyan-400');
+            result.innerHTML = `
+                <div class="text-6xl mb-3">${freed ? '🧞‍♂️' : '🪔'}</div>
+                <div class="text-2xl font-bold ${freed ? 'text-green-300' : 'text-cyan-300'} mb-2">${freed ? 'GENIE FREED! 🎉' : 'The Genie Waits...'}</div>
+                <div class="text-lg text-white">${window.rescueScore} correct answers | ${window.rescueLives} lives remaining</div>
+                <div class="text-sm text-cyan-200 mt-2">${freed ? 'Your 3 wishes have been granted!' : 'Study more and try again!'}</div>
+                <button onclick="initRescueGame()" class="mt-4 px-6 py-2 bg-cyan-600 rounded-full text-white font-bold hover:scale-105 transition-all">🔄 Play Again</button>
+            `;
+            result.classList.remove('hidden');
+            if (freed) { addXP(50, 'Genie freed!'); celebrate(); } else addXP(10);
+        }
 
     </script>
 </body>
